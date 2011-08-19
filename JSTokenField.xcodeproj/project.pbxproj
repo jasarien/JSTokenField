@@ -12,9 +12,18 @@
 		1A1A069F13FEDEEC00CA6645 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A069E13FEDEEC00CA6645 /* CoreGraphics.framework */; };
 		1A1A06A513FEDEEC00CA6645 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06A313FEDEEC00CA6645 /* InfoPlist.strings */; };
 		1A1A06A713FEDEEC00CA6645 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06A613FEDEEC00CA6645 /* main.m */; };
-		1A1A06AB13FEDEEC00CA6645 /* JSTokenFieldAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06AA13FEDEEC00CA6645 /* JSTokenFieldAppDelegate.m */; };
-		1A1A06AE13FEDEEC00CA6645 /* JSTokenFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06AD13FEDEEC00CA6645 /* JSTokenFieldViewController.m */; };
-		1A1A06B113FEDEEC00CA6645 /* JSTokenFieldViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06AF13FEDEEC00CA6645 /* JSTokenFieldViewController.xib */; };
+		1A1A06AB13FEDEEC00CA6645 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */; };
+		1A1A06AE13FEDEEC00CA6645 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */; };
+		1A1A06B113FEDEEC00CA6645 /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */; };
+		1A1A06BB13FEE01C00CA6645 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */; };
+		1A1A06BC13FEE01C00CA6645 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */; };
+		1A1A06C113FEE2D900CA6645 /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06BD13FEE2D900CA6645 /* tokenHighlighted.png */; };
+		1A1A06C213FEE2D900CA6645 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06BE13FEE2D900CA6645 /* tokenHighlighted@2x.png */; };
+		1A1A06C313FEE2D900CA6645 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06BF13FEE2D900CA6645 /* tokenNormal.png */; };
+		1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */; };
+		1A1A06C713FEF5F500CA6645 /* JSTokenFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06C613FEF5F400CA6645 /* JSTokenFieldViewController.m */; };
+		1A1A06CF13FF000C00CA6645 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CD13FF000C00CA6645 /* AddressBook.framework */; };
+		1A1A06D013FF000C00CA6645 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,15 +31,27 @@
 		1A1A069A13FEDEEC00CA6645 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1A1A069C13FEDEEC00CA6645 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A1A069E13FEDEEC00CA6645 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1A1A06A213FEDEEC00CA6645 /* JSTokenField-Info.plist */ = {isa = PBXFileReference; path = "JSTokenField-Info.plist"; sourceTree = "<group>"; };
+		1A1A06A213FEDEEC00CA6645 /* JSTokenField-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JSTokenField-Info.plist"; sourceTree = "<group>"; };
 		1A1A06A413FEDEEC00CA6645 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1A1A06A613FEDEEC00CA6645 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1A1A06A813FEDEEC00CA6645 /* JSTokenField-Prefix.pch */ = {isa = PBXFileReference; path = "JSTokenField-Prefix.pch"; sourceTree = "<group>"; };
-		1A1A06A913FEDEEC00CA6645 /* JSTokenFieldAppDelegate.h */ = {isa = PBXFileReference; path = JSTokenFieldAppDelegate.h; sourceTree = "<group>"; };
-		1A1A06AA13FEDEEC00CA6645 /* JSTokenFieldAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSTokenFieldAppDelegate.m; sourceTree = "<group>"; };
-		1A1A06AC13FEDEEC00CA6645 /* JSTokenFieldViewController.h */ = {isa = PBXFileReference; path = JSTokenFieldViewController.h; sourceTree = "<group>"; };
-		1A1A06AD13FEDEEC00CA6645 /* JSTokenFieldViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSTokenFieldViewController.m; sourceTree = "<group>"; };
-		1A1A06B013FEDEEC00CA6645 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/JSTokenFieldViewController.xib; sourceTree = "<group>"; };
+		1A1A06A813FEDEEC00CA6645 /* JSTokenField-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSTokenField-Prefix.pch"; sourceTree = "<group>"; };
+		1A1A06A913FEDEEC00CA6645 /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
+		1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
+		1A1A06AC13FEDEEC00CA6645 /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
+		1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
+		1A1A06B013FEDEEC00CA6645 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DemoViewController.xib; sourceTree = "<group>"; };
+		1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenButton.h; sourceTree = "<group>"; };
+		1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenButton.m; sourceTree = "<group>"; };
+		1A1A06B913FEE01C00CA6645 /* JSTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenField.h; sourceTree = "<group>"; };
+		1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenField.m; sourceTree = "<group>"; };
+		1A1A06BD13FEE2D900CA6645 /* tokenHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenHighlighted.png; sourceTree = "<group>"; };
+		1A1A06BE13FEE2D900CA6645 /* tokenHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenHighlighted@2x.png"; sourceTree = "<group>"; };
+		1A1A06BF13FEE2D900CA6645 /* tokenNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenNormal.png; sourceTree = "<group>"; };
+		1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
+		1A1A06C513FEF5F400CA6645 /* JSTokenFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenFieldViewController.h; sourceTree = "<group>"; };
+		1A1A06C613FEF5F400CA6645 /* JSTokenFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenFieldViewController.m; sourceTree = "<group>"; };
+		1A1A06CD13FF000C00CA6645 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A1A06CF13FF000C00CA6645 /* AddressBook.framework in Frameworks */,
+				1A1A06D013FF000C00CA6645 /* AddressBookUI.framework in Frameworks */,
 				1A1A069B13FEDEEC00CA6645 /* UIKit.framework in Frameworks */,
 				1A1A069D13FEDEEC00CA6645 /* Foundation.framework in Frameworks */,
 				1A1A069F13FEDEEC00CA6645 /* CoreGraphics.framework in Frameworks */,
@@ -67,6 +90,8 @@
 		1A1A069913FEDEEC00CA6645 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A1A06CD13FF000C00CA6645 /* AddressBook.framework */,
+				1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */,
 				1A1A069A13FEDEEC00CA6645 /* UIKit.framework */,
 				1A1A069C13FEDEEC00CA6645 /* Foundation.framework */,
 				1A1A069E13FEDEEC00CA6645 /* CoreGraphics.framework */,
@@ -77,11 +102,17 @@
 		1A1A06A013FEDEEC00CA6645 /* JSTokenField */ = {
 			isa = PBXGroup;
 			children = (
-				1A1A06A913FEDEEC00CA6645 /* JSTokenFieldAppDelegate.h */,
-				1A1A06AA13FEDEEC00CA6645 /* JSTokenFieldAppDelegate.m */,
-				1A1A06AC13FEDEEC00CA6645 /* JSTokenFieldViewController.h */,
-				1A1A06AD13FEDEEC00CA6645 /* JSTokenFieldViewController.m */,
-				1A1A06AF13FEDEEC00CA6645 /* JSTokenFieldViewController.xib */,
+				1A1A06A913FEDEEC00CA6645 /* DemoAppDelegate.h */,
+				1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */,
+				1A1A06AC13FEDEEC00CA6645 /* DemoViewController.h */,
+				1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */,
+				1A1A06C513FEF5F400CA6645 /* JSTokenFieldViewController.h */,
+				1A1A06C613FEF5F400CA6645 /* JSTokenFieldViewController.m */,
+				1A1A06B913FEE01C00CA6645 /* JSTokenField.h */,
+				1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */,
+				1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */,
+				1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */,
+				1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */,
 				1A1A06A113FEDEEC00CA6645 /* Supporting Files */,
 			);
 			path = JSTokenField;
@@ -94,6 +125,10 @@
 				1A1A06A313FEDEEC00CA6645 /* InfoPlist.strings */,
 				1A1A06A613FEDEEC00CA6645 /* main.m */,
 				1A1A06A813FEDEEC00CA6645 /* JSTokenField-Prefix.pch */,
+				1A1A06BD13FEE2D900CA6645 /* tokenHighlighted.png */,
+				1A1A06BE13FEE2D900CA6645 /* tokenHighlighted@2x.png */,
+				1A1A06BF13FEE2D900CA6645 /* tokenNormal.png */,
+				1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -149,7 +184,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A1A06A513FEDEEC00CA6645 /* InfoPlist.strings in Resources */,
-				1A1A06B113FEDEEC00CA6645 /* JSTokenFieldViewController.xib in Resources */,
+				1A1A06B113FEDEEC00CA6645 /* DemoViewController.xib in Resources */,
+				1A1A06C113FEE2D900CA6645 /* tokenHighlighted.png in Resources */,
+				1A1A06C213FEE2D900CA6645 /* tokenHighlighted@2x.png in Resources */,
+				1A1A06C313FEE2D900CA6645 /* tokenNormal.png in Resources */,
+				1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,8 +200,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A1A06A713FEDEEC00CA6645 /* main.m in Sources */,
-				1A1A06AB13FEDEEC00CA6645 /* JSTokenFieldAppDelegate.m in Sources */,
-				1A1A06AE13FEDEEC00CA6645 /* JSTokenFieldViewController.m in Sources */,
+				1A1A06AB13FEDEEC00CA6645 /* DemoAppDelegate.m in Sources */,
+				1A1A06AE13FEDEEC00CA6645 /* DemoViewController.m in Sources */,
+				1A1A06BB13FEE01C00CA6645 /* JSTokenButton.m in Sources */,
+				1A1A06BC13FEE01C00CA6645 /* JSTokenField.m in Sources */,
+				1A1A06C713FEF5F500CA6645 /* JSTokenFieldViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,12 +219,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		1A1A06AF13FEDEEC00CA6645 /* JSTokenFieldViewController.xib */ = {
+		1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				1A1A06B013FEDEEC00CA6645 /* en */,
 			);
-			name = JSTokenFieldViewController.xib;
+			name = DemoViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -236,6 +278,7 @@
 		1A1A06B513FEDEEC00CA6645 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSTokenField/JSTokenField-Prefix.pch";
 				INFOPLIST_FILE = "JSTokenField/JSTokenField-Info.plist";
@@ -247,6 +290,7 @@
 		1A1A06B613FEDEEC00CA6645 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSTokenField/JSTokenField-Prefix.pch";
 				INFOPLIST_FILE = "JSTokenField/JSTokenField-Info.plist";
@@ -274,6 +318,7 @@
 				1A1A06B613FEDEEC00CA6645 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
