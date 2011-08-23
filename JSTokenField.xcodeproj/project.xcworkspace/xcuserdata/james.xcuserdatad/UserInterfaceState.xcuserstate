@@ -2738,9 +2738,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>335796056.76479203</real>
-		<string>{7229, 1128}</string>
-		<string>{7570, 0}</string>
+		<real>335797203.52417803</real>
+		<string>{0, 2120}</string>
+		<string>{7525, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -3551,7 +3551,7 @@
 				<integer>306</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>335786657.88946903</real>
+			<real>335797080.64731199</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -3562,7 +3562,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 11:04</string>
+		<string>Today at 13:58</string>
 		<integer>234</integer>
 		<string>JSTokenField</string>
 		<dict>
@@ -4777,9 +4777,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>335796056.76812798</real>
-		<string>{7229, 1128}</string>
-		<string>{7570, 0}</string>
+		<real>335797203.52932</real>
+		<string>{0, 2120}</string>
+		<string>{7525, 0}</string>
 		<string>-layoutSubviews</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>

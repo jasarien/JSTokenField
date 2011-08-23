@@ -34,8 +34,8 @@ NSString *const JSTokenFieldFrameDidChangeNotification = @"JSTokenFieldFrameDidC
 NSString *const JSTokenFieldFrameKey = @"JSTokenFieldFrameKey";
 NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
-#define HEIGHT_PADDING 3
-#define WIDTH_PADDING 6
+#define HEIGHT_PADDING 6
+#define WIDTH_PADDING 3
 
 #define DEFAULT_HEIGHT 31
 
@@ -203,7 +203,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	
 	if (frame.size.width > self.frame.size.width)
 	{
-		frame.size.width = self.frame.size.width;
+		frame.size.width = self.frame.size.width - (WIDTH_PADDING * 2);
 	}
 	
 	[token setFrame:frame];
@@ -220,9 +220,9 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	CGRect currentRect = CGRectZero;
 	
 	[_label sizeToFit];
-	[_label setFrame:CGRectMake(HEIGHT_PADDING, WIDTH_PADDING, [_label frame].size.width, [_label frame].size.height)];
+	[_label setFrame:CGRectMake(WIDTH_PADDING, HEIGHT_PADDING, [_label frame].size.width, [_label frame].size.height)];
 	
-	currentRect.origin.x += _label.frame.size.width + WIDTH_PADDING;
+	currentRect.origin.x += _label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING;
 	
 	for (UIButton *token in _tokens)
 	{
@@ -230,7 +230,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		
 		if ((currentRect.origin.x + frame.size.width) > self.frame.size.width)
 		{
-			currentRect.origin = CGPointMake(0, (currentRect.origin.y + frame.size.height + HEIGHT_PADDING));
+			currentRect.origin = CGPointMake(WIDTH_PADDING, (currentRect.origin.y + frame.size.height + HEIGHT_PADDING));
 		}
 		
 		frame.origin.x = currentRect.origin.x;
