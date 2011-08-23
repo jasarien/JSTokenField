@@ -1,7 +1,7 @@
 .DS_Store
 *.pbxuser
 *.perspectivev3
-build/
-.svn/
+build
+.svn
 *.xcworkspace
-xcuserdata/
+xcuserdata
