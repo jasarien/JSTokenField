@@ -2738,9 +2738,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>335797203.52417803</real>
-		<string>{0, 2120}</string>
-		<string>{7525, 0}</string>
+		<real>335797393.17427999</real>
+		<string>{1902, 1293}</string>
+		<string>{2388, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -4777,10 +4777,10 @@
 				</dict>
 			</array>
 		</dict>
-		<real>335797203.52932</real>
-		<string>{0, 2120}</string>
-		<string>{7525, 0}</string>
-		<string>-layoutSubviews</string>
+		<real>335797393.17823702</real>
+		<string>{1902, 1293}</string>
+		<string>{2388, 0}</string>
+		<string>-initWithFrame:</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
