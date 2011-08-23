@@ -2642,8 +2642,8 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>335797560.56009698</real>
-		<string>{455, 1884}</string>
+		<real>335797817.74898398</real>
+		<string>{364, 1974}</string>
 		<string>{2271, 0}</string>
 		<dict>
 			<key>$class</key>
@@ -2738,9 +2738,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>335797725.71069801</real>
-		<string>{1902, 1251}</string>
-		<string>{2388, 0}</string>
+		<real>335797823.50486702</real>
+		<string>{1678, 1329}</string>
+		<string>{2363, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -3228,8 +3228,8 @@
 		</dict>
 		<string>IDEDeviceLocation</string>
 		<string>IDEDeviceArchitecture</string>
-		<string>dvtdevice-iphonePlaceholder:placeholder</string>
-		<string>armv7</string>
+		<string>dvtdevice-local-computer:localhost</string>
+		<string>x86_64</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -4769,9 +4769,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>335797725.71494699</real>
-		<string>{1902, 1251}</string>
-		<string>{2388, 0}</string>
+		<real>335797823.50685698</real>
+		<string>{1678, 1329}</string>
+		<string>{2363, 0}</string>
 		<string>-initWithFrame:</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
