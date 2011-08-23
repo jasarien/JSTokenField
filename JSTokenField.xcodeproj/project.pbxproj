@@ -21,7 +21,6 @@
 		1A1A06C213FEE2D900CA6645 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06BE13FEE2D900CA6645 /* tokenHighlighted@2x.png */; };
 		1A1A06C313FEE2D900CA6645 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06BF13FEE2D900CA6645 /* tokenNormal.png */; };
 		1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */; };
-		1A1A06C713FEF5F500CA6645 /* JSTokenFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06C613FEF5F400CA6645 /* JSTokenFieldViewController.m */; };
 		1A1A06CF13FF000C00CA6645 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CD13FF000C00CA6645 /* AddressBook.framework */; };
 		1A1A06D013FF000C00CA6645 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
@@ -48,8 +47,6 @@
 		1A1A06BE13FEE2D900CA6645 /* tokenHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenHighlighted@2x.png"; sourceTree = "<group>"; };
 		1A1A06BF13FEE2D900CA6645 /* tokenNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenNormal.png; sourceTree = "<group>"; };
 		1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
-		1A1A06C513FEF5F400CA6645 /* JSTokenFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenFieldViewController.h; sourceTree = "<group>"; };
-		1A1A06C613FEF5F400CA6645 /* JSTokenFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenFieldViewController.m; sourceTree = "<group>"; };
 		1A1A06CD13FF000C00CA6645 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -106,8 +103,6 @@
 				1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */,
 				1A1A06AC13FEDEEC00CA6645 /* DemoViewController.h */,
 				1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */,
-				1A1A06C513FEF5F400CA6645 /* JSTokenFieldViewController.h */,
-				1A1A06C613FEF5F400CA6645 /* JSTokenFieldViewController.m */,
 				1A1A06B913FEE01C00CA6645 /* JSTokenField.h */,
 				1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */,
 				1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */,
@@ -204,7 +199,6 @@
 				1A1A06AE13FEDEEC00CA6645 /* DemoViewController.m in Sources */,
 				1A1A06BB13FEE01C00CA6645 /* JSTokenButton.m in Sources */,
 				1A1A06BC13FEE01C00CA6645 /* JSTokenField.m in Sources */,
-				1A1A06C713FEF5F500CA6645 /* JSTokenFieldViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +276,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSTokenField/JSTokenField-Prefix.pch";
 				INFOPLIST_FILE = "JSTokenField/JSTokenField-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -294,6 +289,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSTokenField/JSTokenField-Prefix.pch";
 				INFOPLIST_FILE = "JSTokenField/JSTokenField-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

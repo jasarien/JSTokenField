@@ -27,15 +27,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JSTokenFieldViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import <AddressBook/AddressBook.h>
+#import "JSTokenField.h"
 
-@interface DemoViewController : UITableViewController <JSTokenFieldViewControllerDelegate, JSTokenFieldDelegate, ABPeoplePickerNavigationControllerDelegate> {
+@interface DemoViewController : UIViewController <JSTokenFieldDelegate> {
 
-	NSMutableArray *_recipients;
+	NSMutableArray *_toRecipients;
+	NSMutableArray *_ccRecipients;
 	
-	JSTokenFieldViewController *_tokenFieldViewController;
+	JSTokenField *_toField;
+	JSTokenField *_ccField;
 	
 }
 

@@ -27,15 +27,15 @@
 //
 
 #import "DemoViewController.h"
-#import "JSTokenFieldViewController.h"
+#import "JSTokenField.h"
 
 @implementation DemoViewController
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_recipients release], _recipients = nil;
-	[_tokenFieldViewController release], _tokenFieldViewController = nil;
+	[_toRecipients release], _toRecipients = nil;
+	[_toField release], _toField = nil;
 	
 	[super dealloc];
 }
@@ -56,19 +56,24 @@
 												 name:JSTokenFieldFrameDidChangeNotification
 											   object:nil];
 	
-	_recipients = [[NSMutableArray alloc] init];
+	_toRecipients = [[NSMutableArray alloc] init];
 	
-	_tokenFieldViewController = [[JSTokenFieldViewController alloc] init];
-	[_tokenFieldViewController setDelegate:self];
-	[self.tableView setTableHeaderView:_tokenFieldViewController.view];
-	[_tokenFieldViewController.tokenField setDelegate:self];
+	_toField = [[JSTokenField alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
+	[[_toField label] setText:@"To:"];
+	[_toField setDelegate:self];
+	[self.view addSubview:_toField];
+	
+	_ccField = [[JSTokenField alloc] initWithFrame:CGRectMake(0, 31, 320, 31)];
+	[[_ccField label] setText:@"CC:"];
+	[_ccField setDelegate:self];
+	[self.view addSubview:_ccField];
 }
 
 - (void)viewDidUnload
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_recipients release], _recipients = nil;
-	[_tokenFieldViewController release], _tokenFieldViewController = nil;
+	[_toRecipients release], _toRecipients = nil;
+	[_toField release], _toField = nil;
 	[super viewDidUnload];
 }
 
@@ -93,123 +98,32 @@
 }
 
 #pragma mark -
-#pragma mark UITableViewControllerDelegate/DataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-	return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-	return 0;
-}
-
-#pragma mark -
 #pragma mark JSTokenFieldDelegate
 
 - (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj
 {
 	NSDictionary *recipient = [NSDictionary dictionaryWithObject:obj forKey:title];
-	[_recipients addObject:recipient];
-	NSLog(@"Added token for < %@ : %@ >\n%@", title, obj, _recipients);
+	[_toRecipients addObject:recipient];
+	NSLog(@"Added token for < %@ : %@ >\n%@", title, obj, _toRecipients);
 
 }
 
 - (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
 {	
-	[_recipients removeObjectAtIndex:index];
-	NSLog(@"Deleted token %d\n%@", index, _recipients);
+	[_toRecipients removeObjectAtIndex:index];
+	NSLog(@"Deleted token %d\n%@", index, _toRecipients);
 }
 
 - (void)handleTokenFieldFrameDidChange:(NSNotification *)note
 {
-	CGRect frame = [[_tokenFieldViewController view] frame];
-	CGRect newFrame = [[[note userInfo] objectForKey:JSTokenFieldFrameKey] CGRectValue];
-	
-	[UIView beginAnimations:nil context:nil];
-	
-	if (newFrame.size.height > 44)
-	{	
-		frame.size.height = newFrame.size.height + 9;
-		[[_tokenFieldViewController view] setFrame:frame];
-		[_tokenFieldViewController.separator setFrame:CGRectMake(0, frame.size.height-1, 320, 1)];
-	}
-	else
+	if ([[note object] isEqual:_toField])
 	{
-		frame.size.height = 44;
-		[[_tokenFieldViewController view] setFrame:frame];	
-		[_tokenFieldViewController.separator setFrame:CGRectMake(0, frame.size.height-1, 320, 1)];
+		[UIView animateWithDuration:0.0
+						 animations:^{
+							 [_ccField setFrame:CGRectMake(0, [_toField frame].size.height + [_toField frame].origin.y, [_ccField frame].size.width, [_ccField frame].size.height)];
+						 }
+						 completion:nil];
 	}
-	
-	CGRect addButtonFrame = [_tokenFieldViewController.addContactButton frame];
-	addButtonFrame.origin = CGPointMake((newFrame.origin.x + newFrame.size.width + 4), ((newFrame.origin.y + newFrame.size.height) - addButtonFrame.size.height - 4));
-	[_tokenFieldViewController.addContactButton setFrame:addButtonFrame];
-	
-	[UIView commitAnimations];
-	
-	[self.tableView setTableHeaderView:[_tokenFieldViewController view]];
-	
-	if (![[note userInfo] objectForKey:JSDeletedTokenKey])
-	{
-		[self.tableView scrollRectToVisible:_tokenFieldViewController.view.frame animated:YES];
-	}
-}
-
-
-#pragma mark -
-#pragma mark ABPeoplePickerNavigationControllerDelegate
-
-- (void)addContact
-{
-	ABPeoplePickerNavigationController *peoplePicker = [[[ABPeoplePickerNavigationController alloc] init] autorelease];
-	[peoplePicker setPeoplePickerDelegate:self];
-	[self presentModalViewController:peoplePicker animated:YES];
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
-{
-	return YES;
-}
-
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
-{
-	[self dismissModalViewControllerAnimated:YES];
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{		
-	[self dismissModalViewControllerAnimated:YES];
-	
-	ABMultiValueRef multiValue = ABRecordCopyValue(person, property);
-	NSString *phoneNumber = (NSString *)ABMultiValueCopyValueAtIndex(multiValue, ABMultiValueGetIndexForIdentifier(multiValue, identifier));
-	[phoneNumber autorelease];
-	CFRelease(multiValue);
-	
-	NSString *firstName = (NSString *)ABRecordCopyValue(person,kABPersonFirstNameProperty);
-	NSString *lastName = (NSString *)ABRecordCopyValue(person,kABPersonLastNameProperty);
-	
-	[firstName autorelease];
-	[lastName autorelease];
-	
-	NSString *displayName = nil;
-	
-	if([firstName length] && [lastName length]){
-		displayName = [NSString stringWithFormat:@"%@ %@",firstName,lastName];
-	}else if([firstName length]){
-		displayName = [NSString stringWithFormat:@"%@",firstName];
-	}else if([lastName length]){
-		displayName = [NSString stringWithFormat:@"%@",lastName];
-	}
-	
-	if ([displayName length] == 0)
-	{
-		displayName = phoneNumber;
-	}
-	
-	[_tokenFieldViewController.tokenField addTokenWithTitle:displayName representedObject:phoneNumber];
-	
-	return NO;
 }
 
 @end
