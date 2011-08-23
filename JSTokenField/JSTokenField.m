@@ -37,6 +37,8 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 #define HEIGHT_PADDING 3
 #define WIDTH_PADDING 6
 
+#define DEFAULT_HEIGHT 31
+
 @interface JSTokenField ()
 
 - (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
@@ -49,18 +51,36 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 @synthesize tokens = _tokens;
 @synthesize textField = _textField;
+@synthesize label = _label;
 @synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
+	if (frame.size.height < DEFAULT_HEIGHT)
+	{
+		frame.size.height = DEFAULT_HEIGHT;
+	}
+	
     if ((self = [super initWithFrame:frame]))
 	{
+		[self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
+		UIView *separator = [[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-1, frame.size.width, 1)] autorelease];
+		[separator setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
+		[self addSubview:separator];
+		[separator setBackgroundColor:[UIColor lightGrayColor]];
+		
+		_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
+		[_label setBackgroundColor:[UIColor clearColor]];
+		[_label setFont:[UIFont systemFontOfSize:17.0]];
+		
+		[self addSubview:_label];
+		
 //		self.layer.borderColor = [[UIColor blueColor] CGColor];
 //		self.layer.borderWidth = 1.0;
 		
 		_tokens = [[NSMutableArray alloc] init];
 		
-		_hiddenTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0 , 31, 31)];
+		_hiddenTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0 , DEFAULT_HEIGHT, DEFAULT_HEIGHT)];
 		[_hiddenTextField setHidden:YES];
 		[_hiddenTextField setDelegate:self];
 		[self addSubview:_hiddenTextField];
@@ -99,6 +119,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[_hiddenTextField release], _hiddenTextField = nil;
 	[_textField release], _textField = nil;
+	[_label release], _label = nil;
 	[_tokens release], _tokens = nil;
 	
 	[super dealloc];
@@ -198,6 +219,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	CGRect currentRect = CGRectZero;
 	
+	[_label sizeToFit];
+	[_label setFrame:CGRectMake(HEIGHT_PADDING, WIDTH_PADDING, [_label frame].size.width, [_label frame].size.height)];
+	
+	currentRect.origin.x += _label.frame.size.width + WIDTH_PADDING;
+	
 	for (UIButton *token in _tokens)
 	{
 		CGRect frame = [token frame];
@@ -213,7 +239,15 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		[token setFrame:frame];
 		
 		if (![token superview])
+		{
+			[token setAlpha:0.0];
 			[self addSubview:token];
+			[UIView animateWithDuration:0.5
+							 animations:^{
+								 [token setAlpha:1.0];
+							 }
+							 completion:nil];
+		}
 		
 		currentRect.origin.x += frame.size.width + WIDTH_PADDING;
 		currentRect.size = frame.size;
@@ -238,7 +272,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	CGRect selfFrame = [self frame];
 	selfFrame.size.height = textFieldFrame.origin.y + textFieldFrame.size.height + HEIGHT_PADDING;
 	
-	[self setFrame:selfFrame];
+	[UIView animateWithDuration:0.3
+					 animations:^{
+						 [self setFrame:selfFrame];
+					 }
+					 completion:nil];
 }
 
 - (void)toggle:(id)sender
@@ -263,7 +301,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		[userInfo setObject:_deletedToken forKey:JSDeletedTokenKey]; 
 		[_deletedToken release], _deletedToken = nil;
 	}
-		 
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[[userInfo copy] autorelease]];
 }
 
