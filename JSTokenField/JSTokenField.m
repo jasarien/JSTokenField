@@ -39,7 +39,9 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 #define DEFAULT_HEIGHT 31
 
-@interface JSTokenField ()
+#define ZERO_WIDTH_SPACE_STRING @"\u200B"
+
+@interface JSTokenField ();
 
 - (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
 - (void)deleteHighlightedToken;
@@ -85,7 +87,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		[_hiddenTextField setHidden:YES];
 		[_hiddenTextField setDelegate:self];
 		[self addSubview:_hiddenTextField];
-		[_hiddenTextField setText:@" "];
+		[_hiddenTextField setText:ZERO_WIDTH_SPACE_STRING];
 		
 		frame.origin.y += HEIGHT_PADDING;
 		frame.size.height -= HEIGHT_PADDING;
@@ -98,7 +100,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 //		[_textField.layer setBorderColor:[[UIColor redColor] CGColor]];
 //		[_textField.layer setBorderWidth:1.0];
 		
-		[_textField setText:@" "];
+		[_textField setText:ZERO_WIDTH_SPACE_STRING];
 		
 		[self addSubview:_textField];
 		
@@ -307,16 +309,16 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	// ensure there's always a space at the beginning
 	NSMutableString *text = [[[_textField text] mutableCopy] autorelease];
-	if (![text hasPrefix:@" "])
+	if (![text hasPrefix:ZERO_WIDTH_SPACE_STRING])
 	{
-		[text insertString:@" " atIndex:0];
+		[text insertString:ZERO_WIDTH_SPACE_STRING atIndex:0];
 		[_textField setText:text];
 	}
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	if ([[textField text] isEqualToString:@" "] && [string isEqualToString:@""])
+	if ([[textField text] isEqualToString:ZERO_WIDTH_SPACE_STRING] && [string isEqualToString:@""])
 	{
 		for (JSTokenButton *token in _tokens)
 		{
@@ -385,7 +387,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		if ([[textField text] length] > 1)
 		{
 			[self addTokenWithTitle:[textField text] representedObject:[textField text]];
-			[textField setText:@" "];
+			[textField setText:ZERO_WIDTH_SPACE_STRING];
 		}
 	}
 	
