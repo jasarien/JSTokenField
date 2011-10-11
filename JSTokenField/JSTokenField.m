@@ -31,7 +31,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 NSString *const JSTokenFieldFrameDidChangeNotification = @"JSTokenFieldFrameDidChangeNotification";
-NSString *const JSTokenFieldFrameKey = @"JSTokenFieldFrameKey";
+NSString *const JSTokenFieldNewFrameKey = @"JSTokenFieldNewFrameKey";
+NSString *const JSTokenFieldOldFrameKey = @"JSTokenFieldOldFrameKey";
 NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 #define HEIGHT_PADDING 3
@@ -301,9 +302,12 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (void)setFrame:(CGRect)frame
 {
+    CGRect oldFrame = self.frame;
+    
 	[super setFrame:frame];
 	
-	NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:[NSValue valueWithCGRect:frame] forKey:JSTokenFieldFrameKey];
+	NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:[NSValue valueWithCGRect:frame] forKey:JSTokenFieldNewFrameKey];
+    [userInfo setObject:[NSValue valueWithCGRect:oldFrame] forKey:JSTokenFieldOldFrameKey];
 	if (_deletedToken)
 	{
 		[userInfo setObject:_deletedToken forKey:JSDeletedTokenKey]; 
