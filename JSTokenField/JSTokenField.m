@@ -34,7 +34,7 @@ NSString *const JSTokenFieldFrameDidChangeNotification = @"JSTokenFieldFrameDidC
 NSString *const JSTokenFieldFrameKey = @"JSTokenFieldFrameKey";
 NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
-#define HEIGHT_PADDING 6
+#define HEIGHT_PADDING 3
 #define WIDTH_PADDING 3
 
 #define DEFAULT_HEIGHT 31
@@ -107,12 +107,13 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     [_hiddenTextField setText:ZERO_WIDTH_SPACE_STRING];
     
     frame.origin.y += HEIGHT_PADDING;
-    frame.size.height -= HEIGHT_PADDING;
+    frame.size.height -= HEIGHT_PADDING * 2;
     _textField = [[UITextField alloc] initWithFrame:frame];
     [_textField setDelegate:self];
     [_textField setBorderStyle:UITextBorderStyleNone];
     [_textField setBackground:nil];
     [_textField setBackgroundColor:[UIColor clearColor]];
+    [_textField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     
     //		[_textField.layer setBorderColor:[[UIColor redColor] CGColor]];
     //		[_textField.layer setBorderWidth:1.0];
@@ -275,7 +276,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	else
 	{
 		textFieldFrame.size.width = self.frame.size.width;
-		textFieldFrame.origin = CGPointMake(0, (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
+		textFieldFrame.origin = CGPointMake(_label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING, (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
 	}
 	
 	textFieldFrame.origin.y += HEIGHT_PADDING;
