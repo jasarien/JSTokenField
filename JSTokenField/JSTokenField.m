@@ -31,19 +31,23 @@
 #import <QuartzCore/QuartzCore.h>
 
 NSString *const JSTokenFieldFrameDidChangeNotification = @"JSTokenFieldFrameDidChangeNotification";
-NSString *const JSTokenFieldFrameKey = @"JSTokenFieldFrameKey";
+NSString *const JSTokenFieldNewFrameKey = @"JSTokenFieldNewFrameKey";
+NSString *const JSTokenFieldOldFrameKey = @"JSTokenFieldOldFrameKey";
 NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
-#define HEIGHT_PADDING 6
+#define HEIGHT_PADDING 3
 #define WIDTH_PADDING 3
 
 #define DEFAULT_HEIGHT 31
 
-@interface JSTokenField ()
+#define ZERO_WIDTH_SPACE_STRING @"\u200B"
+
+@interface JSTokenField ();
 
 - (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
 - (void)deleteHighlightedToken;
 
+- (void)commonSetup;
 @end
 
 
@@ -63,56 +67,66 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	
     if ((self = [super initWithFrame:frame]))
 	{
-		[self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
-		UIView *separator = [[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-1, frame.size.width, 1)] autorelease];
-		[separator setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
-		[self addSubview:separator];
-		[separator setBackgroundColor:[UIColor lightGrayColor]];
-		
-		_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
-		[_label setBackgroundColor:[UIColor clearColor]];
-		[_label setTextColor:[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1.0]];
-		[_label setFont:[UIFont fontWithName:@"Helvetica Neue" size:17.0]];
-		
-		[self addSubview:_label];
-		
-//		self.layer.borderColor = [[UIColor blueColor] CGColor];
-//		self.layer.borderWidth = 1.0;
-		
-		_tokens = [[NSMutableArray alloc] init];
-		
-		_hiddenTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0 , DEFAULT_HEIGHT, DEFAULT_HEIGHT)];
-		[_hiddenTextField setHidden:YES];
-		[_hiddenTextField setDelegate:self];
-		[self addSubview:_hiddenTextField];
-		[_hiddenTextField setText:@" "];
-		
-		frame.origin.y += HEIGHT_PADDING;
-		frame.size.height -= HEIGHT_PADDING;
-		_textField = [[UITextField alloc] initWithFrame:frame];
-		[_textField setDelegate:self];
-		[_textField setBorderStyle:UITextBorderStyleNone];
-		[_textField setBackground:nil];
-		[_textField setBackgroundColor:[UIColor clearColor]];
-		
-//		[_textField.layer setBorderColor:[[UIColor redColor] CGColor]];
-//		[_textField.layer setBorderWidth:1.0];
-		
-		[_textField setText:@" "];
-		
-		[self addSubview:_textField];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(handleTextDidChange:)
-													 name:UITextFieldTextDidChangeNotification
-												   object:_textField];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(handleTextDidChange:)
-													 name:UITextFieldTextDidChangeNotification
-												   object:_hiddenTextField];
+        [self commonSetup];
     }
 	
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonSetup];
+    }
+    return self;
+}
+
+- (void)commonSetup {
+    CGRect frame = self.frame;
+    [self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
+    
+    _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
+    [_label setBackgroundColor:[UIColor clearColor]];
+    [_label setTextColor:[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1.0]];
+    [_label setFont:[UIFont fontWithName:@"Helvetica Neue" size:17.0]];
+    
+    [self addSubview:_label];
+    
+    //		self.layer.borderColor = [[UIColor blueColor] CGColor];
+    //		self.layer.borderWidth = 1.0;
+    
+    _tokens = [[NSMutableArray alloc] init];
+    
+    _hiddenTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0 , DEFAULT_HEIGHT, DEFAULT_HEIGHT)];
+    [_hiddenTextField setHidden:YES];
+    [_hiddenTextField setDelegate:self];
+    [self addSubview:_hiddenTextField];
+    [_hiddenTextField setText:ZERO_WIDTH_SPACE_STRING];
+    
+    frame.origin.y += HEIGHT_PADDING;
+    frame.size.height -= HEIGHT_PADDING * 2;
+    _textField = [[UITextField alloc] initWithFrame:frame];
+    [_textField setDelegate:self];
+    [_textField setBorderStyle:UITextBorderStyleNone];
+    [_textField setBackground:nil];
+    [_textField setBackgroundColor:[UIColor clearColor]];
+    [_textField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    
+    //		[_textField.layer setBorderColor:[[UIColor redColor] CGColor]];
+    //		[_textField.layer setBorderWidth:1.0];
+    
+    [_textField setText:ZERO_WIDTH_SPACE_STRING];
+    
+    [self addSubview:_textField];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTextDidChange:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:_textField];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTextDidChange:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:_hiddenTextField];
 }
 
 - (void)dealloc
@@ -259,7 +273,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	else
 	{
 		textFieldFrame.size.width = self.frame.size.width;
-		textFieldFrame.origin = CGPointMake(0, (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
+		textFieldFrame.origin = CGPointMake(_label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING, (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
 	}
 	
 	textFieldFrame.origin.y += HEIGHT_PADDING;
@@ -288,9 +302,12 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (void)setFrame:(CGRect)frame
 {
+    CGRect oldFrame = self.frame;
+    
 	[super setFrame:frame];
 	
-	NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:[NSValue valueWithCGRect:frame] forKey:JSTokenFieldFrameKey];
+	NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:[NSValue valueWithCGRect:frame] forKey:JSTokenFieldNewFrameKey];
+    [userInfo setObject:[NSValue valueWithCGRect:oldFrame] forKey:JSTokenFieldOldFrameKey];
 	if (_deletedToken)
 	{
 		[userInfo setObject:_deletedToken forKey:JSDeletedTokenKey]; 
@@ -307,16 +324,16 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	// ensure there's always a space at the beginning
 	NSMutableString *text = [[[_textField text] mutableCopy] autorelease];
-	if (![text hasPrefix:@" "])
+	if (![text hasPrefix:ZERO_WIDTH_SPACE_STRING])
 	{
-		[text insertString:@" " atIndex:0];
+		[text insertString:ZERO_WIDTH_SPACE_STRING atIndex:0];
 		[_textField setText:text];
 	}
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	if ([[textField text] isEqualToString:@" "] && [string isEqualToString:@""])
+	if ([[textField text] isEqualToString:ZERO_WIDTH_SPACE_STRING] && [string isEqualToString:@""])
 	{
 		for (JSTokenButton *token in _tokens)
 		{
@@ -385,7 +402,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		if ([[textField text] length] > 1)
 		{
 			[self addTokenWithTitle:[textField text] representedObject:[textField text]];
-			[textField setText:@" "];
+			[textField setText:ZERO_WIDTH_SPACE_STRING];
 		}
 	}
 	

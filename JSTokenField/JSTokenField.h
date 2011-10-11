@@ -32,7 +32,8 @@
 @protocol JSTokenFieldDelegate;
 
 extern NSString *const JSTokenFieldFrameDidChangeNotification;
-extern NSString *const JSTokenFieldFrameKey;
+extern NSString *const JSTokenFieldNewFrameKey;
+extern NSString *const JSTokenFieldOldFrameKey;
 extern NSString *const JSDeletedTokenKey;
 
 @interface JSTokenField : UIView <UITextFieldDelegate> {
@@ -63,7 +64,4 @@ extern NSString *const JSDeletedTokenKey;
 - (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
 - (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index;
 
-@optional
-- (void)tokenFieldFrameWillChange:(JSTokenField *)tokenField;
-- (void)tokenField:(JSTokenField *)tokenField frameDidChange:(CGRect)newFrame;
 @end
