@@ -83,10 +83,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (void)commonSetup {
     CGRect frame = self.frame;
     [self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
-    UIView *separator = [[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-1, frame.size.width, 1)] autorelease];
-    [separator setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
-    [self addSubview:separator];
-    [separator setBackgroundColor:[UIColor lightGrayColor]];
     
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
     [_label setBackgroundColor:[UIColor clearColor]];
