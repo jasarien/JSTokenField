@@ -23,6 +23,11 @@
 		1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */; };
 		1A1A06CF13FF000C00CA6645 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CD13FF000C00CA6645 /* AddressBook.framework */; };
 		1A1A06D013FF000C00CA6645 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */; };
+		B71650D1144399F800EBF2C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A069C13FEDEEC00CA6645 /* Foundation.framework */; };
+		B71650DB14439A0500EBF2C7 /* JSTokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A1A06B913FEE01C00CA6645 /* JSTokenField.h */; };
+		B71650DC14439A0500EBF2C7 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */; };
+		B71650DD14439A0500EBF2C7 /* JSTokenButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */; };
+		B71650DE14439A0500EBF2C7 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +54,7 @@
 		1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
 		1A1A06CD13FF000C00CA6645 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		B71650D0144399F800EBF2C7 /* libJSTokenFieldLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSTokenFieldLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,14 @@
 				1A1A069B13FEDEEC00CA6645 /* UIKit.framework in Frameworks */,
 				1A1A069D13FEDEEC00CA6645 /* Foundation.framework in Frameworks */,
 				1A1A069F13FEDEEC00CA6645 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B71650CD144399F800EBF2C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B71650D1144399F800EBF2C7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				1A1A069613FEDEEC00CA6645 /* JSTokenField.app */,
+				B71650D0144399F800EBF2C7 /* libJSTokenFieldLibrary.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,6 +145,18 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		B71650CE144399F800EBF2C7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B71650DB14439A0500EBF2C7 /* JSTokenField.h in Headers */,
+				B71650DD14439A0500EBF2C7 /* JSTokenButton.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		1A1A069513FEDEEC00CA6645 /* JSTokenField */ = {
 			isa = PBXNativeTarget;
@@ -148,12 +175,30 @@
 			productReference = 1A1A069613FEDEEC00CA6645 /* JSTokenField.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B71650CF144399F800EBF2C7 /* JSTokenFieldLibrary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B71650D8144399F900EBF2C7 /* Build configuration list for PBXNativeTarget "JSTokenFieldLibrary" */;
+			buildPhases = (
+				B71650CC144399F800EBF2C7 /* Sources */,
+				B71650CD144399F800EBF2C7 /* Frameworks */,
+				B71650CE144399F800EBF2C7 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSTokenFieldLibrary;
+			productName = JSTokenFieldLibrary;
+			productReference = B71650D0144399F800EBF2C7 /* libJSTokenFieldLibrary.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		1A1A068D13FEDEEC00CA6645 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = JamSoft;
 			};
 			buildConfigurationList = 1A1A069013FEDEEC00CA6645 /* Build configuration list for PBXProject "JSTokenField" */;
@@ -169,6 +214,7 @@
 			projectRoot = "";
 			targets = (
 				1A1A069513FEDEEC00CA6645 /* JSTokenField */,
+				B71650CF144399F800EBF2C7 /* JSTokenFieldLibrary */,
 			);
 		};
 /* End PBXProject section */
@@ -202,6 +248,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B71650CC144399F800EBF2C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B71650DC14439A0500EBF2C7 /* JSTokenField.m in Sources */,
+				B71650DE14439A0500EBF2C7 /* JSTokenButton.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -229,7 +284,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -254,7 +309,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -295,6 +350,26 @@
 			};
 			name = Release;
 		};
+		B71650D9144399F900EBF2C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/JSTokenFieldLibrary.dst;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B71650DA144399F900EBF2C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/JSTokenFieldLibrary.dst;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -312,6 +387,15 @@
 			buildConfigurations = (
 				1A1A06B513FEDEEC00CA6645 /* Debug */,
 				1A1A06B613FEDEEC00CA6645 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B71650D8144399F900EBF2C7 /* Build configuration list for PBXNativeTarget "JSTokenFieldLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B71650D9144399F900EBF2C7 /* Debug */,
+				B71650DA144399F900EBF2C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
