@@ -125,6 +125,29 @@
 	NSLog(@"Deleted token %d\n%@", index, _toRecipients);
 }
 
+- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
+    NSMutableString *recipient = [NSMutableString string];
+	
+	NSMutableCharacterSet *charSet = [[[NSCharacterSet whitespaceCharacterSet] mutableCopy] autorelease];
+	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+	
+    NSString *rawStr = [[tokenField textField] text];
+	for (int i = 0; i < [rawStr length]; i++)
+	{
+		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
+		{
+			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
+		}
+	}
+    
+    if ([rawStr length])
+	{
+		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
+	}
+    
+    return NO;
+}
+
 - (void)handleTokenFieldFrameDidChange:(NSNotification *)note
 {
 	if ([[note object] isEqual:_toField])

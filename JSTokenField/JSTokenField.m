@@ -144,27 +144,17 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj
 {
 	NSString *aString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-	NSMutableString *recipient = [NSMutableString string];
 	
-	NSMutableCharacterSet *charSet = [[[NSCharacterSet whitespaceCharacterSet] mutableCopy] autorelease];
-	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
-	
-	for (int i = 0; i < [(NSString *)obj length]; i++)
-	{
-		if (![charSet characterIsMember:[(NSString *)obj characterAtIndex:i]])
-		{
-			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [(NSString *)obj characterAtIndex:i]]];
-		}
-	}
-	
+    [_textField setText:nil];
+    
 	if ([aString length])
 	{
-		JSTokenButton *token = [self tokenWithString:aString representedObject:recipient];
+		JSTokenButton *token = [self tokenWithString:aString representedObject:obj];
 		[_tokens addObject:token];
 		
 		if ([self.delegate respondsToSelector:@selector(tokenField:didAddToken:representedObject:)])
 		{
-			[self.delegate tokenField:self didAddToken:aString representedObject:recipient];
+			[self.delegate tokenField:self didAddToken:aString representedObject:obj];
 		}
 		
 		[self setNeedsLayout];
@@ -384,13 +374,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	if ([[textField text] length])
-	{
-		[self addTokenWithTitle:[textField text] representedObject:[textField text]];
-		
-		if (textField == _textField)
-			[textField setText:nil];
-	}
+    if (_textField == textField) {
+        if ([self.delegate respondsToSelector:@selector(tokenFieldShouldReturn:)]) {
+            return [self.delegate tokenFieldShouldReturn:self];
+        }
+    }
 	
 	return NO;
 }
@@ -399,7 +387,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	if (textField == _textField)
 	{
-		if ([[textField text] length] > 1)
+        if ([self.delegate respondsToSelector:@selector(tokenFieldDidEndEditing:)]) {
+            [self.delegate tokenFieldDidEndEditing:self];
+            return;
+        }
+        else if ([[textField text] length] > 1)
 		{
 			[self addTokenWithTitle:[textField text] representedObject:[textField text]];
 			[textField setText:ZERO_WIDTH_SPACE_STRING];
