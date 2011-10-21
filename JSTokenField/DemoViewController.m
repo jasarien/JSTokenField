@@ -62,11 +62,22 @@
 	[[_toField label] setText:@"To:"];
 	[_toField setDelegate:self];
 	[self.view addSubview:_toField];
+    
+    UIView *separator1 = [[[UIView alloc] initWithFrame:CGRectMake(0, _toField.bounds.size.height-1, _toField.bounds.size.width, 1)] autorelease];
+    [separator1 setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
+    [_toField addSubview:separator1];
+    [separator1 setBackgroundColor:[UIColor lightGrayColor]];
 	
 	_ccField = [[JSTokenField alloc] initWithFrame:CGRectMake(0, 31, 320, 31)];
 	[[_ccField label] setText:@"CC:"];
 	[_ccField setDelegate:self];
 	[self.view addSubview:_ccField];
+    
+    UIView *separator2 = [[[UIView alloc] initWithFrame:CGRectMake(0, _ccField.bounds.size.height-1, _ccField.bounds.size.width, 1)] autorelease];
+    [separator2 setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
+    [_ccField addSubview:separator2];
+    [separator2 setBackgroundColor:[UIColor lightGrayColor]];
+
 }
 
 - (void)viewDidUnload
@@ -112,6 +123,29 @@
 {	
 	[_toRecipients removeObjectAtIndex:index];
 	NSLog(@"Deleted token %d\n%@", index, _toRecipients);
+}
+
+- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
+    NSMutableString *recipient = [NSMutableString string];
+	
+	NSMutableCharacterSet *charSet = [[[NSCharacterSet whitespaceCharacterSet] mutableCopy] autorelease];
+	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+	
+    NSString *rawStr = [[tokenField textField] text];
+	for (int i = 0; i < [rawStr length]; i++)
+	{
+		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
+		{
+			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
+		}
+	}
+    
+    if ([rawStr length])
+	{
+		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
+	}
+    
+    return NO;
 }
 
 - (void)handleTokenFieldFrameDidChange:(NSNotification *)note
