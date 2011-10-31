@@ -27,8 +27,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JSTokenField;
 
-@interface JSTokenButton : UIButton {
+@interface JSTokenButton : UIButton <UIKeyInput> {
 
 	BOOL _toggled;
 	
@@ -45,6 +46,8 @@
 @property (nonatomic, retain) UIImage *highlightedBg;
 
 @property (nonatomic, retain) id representedObject;
+
+@property (nonatomic, assign) JSTokenField *parentField;
 
 + (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
 
