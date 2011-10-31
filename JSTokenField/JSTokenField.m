@@ -225,7 +225,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	CGRect currentRect = CGRectZero;
 	
 	[_label sizeToFit];
-	[_label setFrame:CGRectMake(WIDTH_PADDING, HEIGHT_PADDING*2, [_label frame].size.width, [_label frame].size.height)];
+	[_label setFrame:CGRectMake(WIDTH_PADDING, HEIGHT_PADDING, [_label frame].size.width, [_label frame].size.height + 3)];
 	
 	currentRect.origin.x += _label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING;
 	
@@ -263,7 +263,8 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	else
 	{
 		textFieldFrame.size.width = self.frame.size.width;
-		textFieldFrame.origin = CGPointMake(_label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING, (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
+        textFieldFrame.origin = CGPointMake(WIDTH_PADDING * 2, 
+                                            (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
 	}
 	
 	textFieldFrame.origin.y += HEIGHT_PADDING;
