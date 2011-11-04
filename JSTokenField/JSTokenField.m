@@ -173,7 +173,8 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 			[_tokens removeObject:token];
 			if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveToken:representedObject:)])
 			{
-				[self.delegate tokenField:self didRemoveTokenAtIndex:i];
+				NSString *tokenName = [tokenToRemove titleForState:UIControlStateNormal];
+				[self.delegate tokenField:self didRemoveToken:tokenName representedObject:tokenToRemove.representedObject];
 			}
 		}
 	}
