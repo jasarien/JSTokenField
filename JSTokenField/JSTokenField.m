@@ -318,7 +318,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if ([string isEqualToString:@""] &&
-        (NSEqualRanges(range, NSMakeRange(0, 0)) || [[textField text] isEqualToString:ZERO_WIDTH_SPACE_STRING]))
+        (NSEqualRanges(range, NSMakeRange(0, 0)) || [[[textField text] substringWithRange:range] isEqualToString:ZERO_WIDTH_SPACE_STRING]))
 	{
         JSTokenButton *token = [_tokens lastObject];
         [token becomeFirstResponder];		
