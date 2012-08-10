@@ -151,12 +151,10 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	}
 }
 
-- (void)removeTokenForString:(NSString *)string
-{
+- (void)removeTokenWithTest:(BOOL (^)(JSTokenButton *token))test {
     JSTokenButton *tokenToRemove = nil;
     for (JSTokenButton *token in [_tokens reverseObjectEnumerator]) {
-        if ([[token titleForState:UIControlStateNormal] isEqualToString:string])
-		{
+        if (test(token)) {
             tokenToRemove = token;
             break;
         }
@@ -169,17 +167,30 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
         [tokenToRemove removeFromSuperview];
         [[tokenToRemove retain] autorelease]; // removing it from the array will dealloc the object, but we want to keep it around for the delegate method below
         
-        NSUInteger tokenIndex = [_tokens indexOfObjectIdenticalTo:tokenToRemove];
         [_tokens removeObject:tokenToRemove];
         if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveToken:representedObject:)])
         {
-            [self.delegate tokenField:self didRemoveTokenAtIndex:tokenIndex];
+				NSString *tokenName = [tokenToRemove titleForState:UIControlStateNormal];
+				[self.delegate tokenField:self didRemoveToken:tokenName representedObject:tokenToRemove.representedObject];
+
         }
 	}
 	
 	[self setNeedsLayout];
 }
 
+- (void)removeTokenForString:(NSString *)string
+{
+    [self removeTokenWithTest:^BOOL(JSTokenButton *token) {
+        return [[token titleForState:UIControlStateNormal] isEqualToString:string];
+    }];
+}
+
+- (void)removeTokenWithRepresentedObject:(id)representedObject {
+    [self removeTokenWithTest:^BOOL(JSTokenButton *token) {
+        return [[token representedObject] isEqual:representedObject];
+    }];
+}
 
 - (void)deleteHighlightedToken
 {
@@ -193,7 +204,8 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 			
 			if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveTokenAtIndex:)])
 			{
-				[self.delegate tokenField:self didRemoveTokenAtIndex:i];
+				NSString *tokenName = [_deletedToken titleForState:UIControlStateNormal];
+				[self.delegate tokenField:self didRemoveToken:tokenName representedObject:_deletedToken.representedObject];
 			}
 			
 			[self setNeedsLayout];	
@@ -305,7 +317,9 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		[_deletedToken release], _deletedToken = nil;
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[[userInfo copy] autorelease]];
+	if (CGRectEqualToRect(oldFrame, frame) == NO) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[[userInfo copy] autorelease]];
+	}
 }
 
 #pragma mark -
