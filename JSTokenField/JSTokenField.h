@@ -40,7 +40,7 @@ extern NSString *const JSDeletedTokenKey;
 	
 	NSMutableArray *_tokens;
 	
-	UITextField *_textField, *_hiddenTextField;
+	UITextField *_textField;
 	
 	id <JSTokenFieldDelegate> _delegate;
 	

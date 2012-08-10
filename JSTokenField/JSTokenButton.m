@@ -27,6 +27,7 @@
 //
 
 #import "JSTokenButton.h"
+#import "JSTokenField.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation JSTokenButton
@@ -35,6 +36,7 @@
 @synthesize normalBg = _normalBg;
 @synthesize highlightedBg = _highlightedBg;
 @synthesize representedObject = _representedObject;
+@synthesize parentField = _parentField;
 
 + (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
 {
@@ -86,5 +88,37 @@
     [super dealloc];
 }
 
+- (BOOL)becomeFirstResponder {
+    BOOL superReturn = [super becomeFirstResponder];
+    if (superReturn) {
+        self.toggled = YES;
+    }
+    return superReturn;
+}
+
+- (BOOL)resignFirstResponder {
+    BOOL superReturn = [super resignFirstResponder];
+    if (superReturn) {
+        self.toggled = NO;
+    }
+    return superReturn;
+}
+
+#pragma mark - UIKeyInput
+- (void)deleteBackward {
+    [_parentField removeTokenForString:[self titleForState:UIControlStateNormal]];
+}
+
+- (BOOL)hasText {
+    return NO;
+}
+- (void)insertText:(NSString *)text {
+    return;
+}
+
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
 
 @end
