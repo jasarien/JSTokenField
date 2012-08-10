@@ -153,27 +153,33 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (void)removeTokenForString:(NSString *)string
 {
-	for (int i = 0; i < [_tokens count]; i++)
-	{
-		JSTokenButton *token = [_tokens objectAtIndex:i];
-		if ([[token titleForState:UIControlStateNormal] isEqualToString:string])
+    JSTokenButton *tokenToRemove = nil;
+    for (JSTokenButton *token in [_tokens reverseObjectEnumerator]) {
+        if ([[token titleForState:UIControlStateNormal] isEqualToString:string])
 		{
-            if (token.isFirstResponder) {
-                [_textField becomeFirstResponder];
-            }
-            token.parentField = nil;
-			[token removeFromSuperview];
-			[[token retain] autorelease]; // removing it from the array will dealloc the object, but we want to keep it around for the delegate method below
-			[_tokens removeObject:token];
-			if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveToken:representedObject:)])
-			{
-				[self.delegate tokenField:self didRemoveTokenAtIndex:i];
-			}
-		}
+            tokenToRemove = token;
+            break;
+        }
+    }
+    
+    if (tokenToRemove) {
+        if (tokenToRemove.isFirstResponder) {
+            [_textField becomeFirstResponder];
+        }
+        [tokenToRemove removeFromSuperview];
+        [[tokenToRemove retain] autorelease]; // removing it from the array will dealloc the object, but we want to keep it around for the delegate method below
+        
+        NSUInteger tokenIndex = [_tokens indexOfObjectIdenticalTo:tokenToRemove];
+        [_tokens removeObject:tokenToRemove];
+        if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveToken:representedObject:)])
+        {
+            [self.delegate tokenField:self didRemoveTokenAtIndex:tokenIndex];
+        }
 	}
 	
 	[self setNeedsLayout];
 }
+
 
 - (void)deleteHighlightedToken
 {
