@@ -38,13 +38,84 @@
 @synthesize representedObject = _representedObject;
 @synthesize parentField = _parentField;
 
+/*- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.ty
+    }
+    return self;
+}*/
+
+static __strong UIImage *_defaultNormalButtonImage = nil;
+static __strong UIImage *_defaultHighlightedButtonImage = nil;
+static __strong UIColor *_defaultNormalButtonTitleColor = nil;
+static __strong UIColor *_defaultHighlightedButtonTitleColor = nil;
+
 + (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
 {
+	return [JSTokenButton tokenWithString:string
+						representedObject:obj
+								 normalBG:nil
+							highlightedBG:nil
+						 normalTitleColor:nil
+					highlightedTitleColor:nil
+			];
+}
+
++ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj normalBG:(UIImage *)nbg highlightedBG:(UIImage *)hbg normalTitleColor:(UIColor *)normalTColor highlightedTitleColor:(UIColor *)hiTColor {
 	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
-	[button setNormalBg:[[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
-	[button setHighlightedBg:[[UIImage imageNamed:@"tokenHighlighted.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
+	if (nbg == nil) {
+		if (_defaultNormalButtonImage == nil) {
+			button.normalBg = [[UIImage imageNamed:@"tokenNormal"]
+							   stretchableImageWithLeftCapWidth:14
+							   topCapHeight:0];
+		}
+		else {
+			button.normalBg = _defaultNormalButtonImage;
+		}
+	}
+	else {
+		button.normalBg = nbg;
+	}
+	if (hbg == nil) {
+		if (_defaultHighlightedButtonImage == nil) {
+			button.highlightedBg = [[UIImage imageNamed:@"tokenHighlighted"]
+									stretchableImageWithLeftCapWidth:14
+									topCapHeight:0];
+		}
+		else {
+			button.highlightedBg = _defaultHighlightedButtonImage;
+		}
+	}
+	else {
+		button.highlightedBg = hbg;
+	}
 	[button setAdjustsImageWhenHighlighted:NO];
-	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	if (normalTColor == nil) {
+		if (_defaultNormalButtonTitleColor == nil) {
+			button.normalTitleColor = [UIColor blackColor];
+		}
+		else {
+			button.normalTitleColor = _defaultNormalButtonTitleColor;
+		}
+	}
+	else {
+		button.normalTitleColor = normalTColor;
+	}
+	if (hiTColor == nil) {
+		if (_defaultHighlightedButtonTitleColor == nil) {
+			button.highlightedTitleColor = [UIColor whiteColor];
+		}
+		else {
+			button.highlightedTitleColor = _defaultHighlightedButtonTitleColor;
+		}
+	}
+	else {
+		button.highlightedTitleColor = hiTColor;
+	}
+	[button setTitleColor:button.normalTitleColor forState:UIControlStateNormal];
+
 	[[button titleLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
 	[[button titleLabel] setLineBreakMode:UILineBreakModeTailTruncation];
 	[button setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
@@ -61,7 +132,7 @@
 	
 	[button setRepresentedObject:obj];
 	
-	return button;
+	return button;	
 }
 
 - (void)setToggled:(BOOL)toggled
@@ -71,12 +142,12 @@
 	if (_toggled)
 	{
 		[self setBackgroundImage:self.highlightedBg forState:UIControlStateNormal];
-		[self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+		[self setTitleColor:self.highlightedTitleColor forState:UIControlStateNormal];
 	}
 	else
 	{
 		[self setBackgroundImage:self.normalBg forState:UIControlStateNormal];
-		[self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+		[self setTitleColor:self.normalTitleColor forState:UIControlStateNormal];
 	}
 }
 
@@ -121,4 +192,21 @@
     return YES;
 }
 
+#pragma mark - Customization related methods
+
++ (void)setDefaultNormalButtonImage:(UIImage *)image {
+	_defaultNormalButtonImage = [image copy];
+}
+
++ (void)setDefaultHighlightedButtonImage:(UIImage *)image {
+	_defaultHighlightedButtonImage = [image copy];
+}
+
++ (void)setDefaultNormalButtonTitleColor:(UIColor *)nColor {
+	_defaultNormalButtonTitleColor = [nColor copy];
+}
+
++ (void)setDefaultHighlightedButtonTitleColor:(UIColor *)hColor {
+	_defaultHighlightedButtonTitleColor = [hColor copy];
+}
 @end
