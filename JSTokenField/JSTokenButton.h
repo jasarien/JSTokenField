@@ -37,7 +37,6 @@
 	UIImage *_highlightedBg;
 	
 	id _representedObject;
-	
 }
 
 @property (nonatomic, getter=isToggled) BOOL toggled;
@@ -48,7 +47,17 @@
 @property (nonatomic, retain) id representedObject;
 
 @property (nonatomic, assign) JSTokenField *parentField;
+@property (nonatomic, strong) UIColor *normalTitleColor;
+@property (nonatomic, strong) UIColor *highlightedTitleColor;
+
 
 + (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
++ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj normalBG:(UIImage *)nbg highlightedBG:(UIImage *)hbg normalTitleColor:(UIColor *)normalTColor highlightedTitleColor:(UIColor *)hiTColor;
 
+
+//Customization related methods
++ (void)setDefaultNormalButtonImage:(UIImage *)image;
++ (void)setDefaultHighlightedButtonImage:(UIImage *)image;
++ (void)setDefaultNormalButtonTitleColor:(UIColor *)nColor;
++ (void)setDefaultHighlightedButtonTitleColor:(UIColor *)hColor;
 @end

@@ -58,6 +58,11 @@ extern NSString *const JSDeletedTokenKey;
 - (void)removeTokenForString:(NSString *)string;
 - (void)removeTokenWithRepresentedObject:(id)representedObject;
 
+- (void)setNormalButtonImage:(UIImage *)image;
+- (void)setHighlightedButtonImage:(UIImage *)image;
+- (void)setNormalButtonTitleColor:(UIColor *)nColor;
+- (void)setHighlightedButtonTitleColor:(UIColor *)hColor;
+
 @end
 
 @protocol JSTokenFieldDelegate <NSObject>
@@ -70,4 +75,6 @@ extern NSString *const JSDeletedTokenKey;
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField;
 - (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
 
+- (void)tokenField:(JSTokenField *)tokenField token:(JSTokenButton *)tokBtn toggledTo:(BOOL)toggleValue;
+- (void)tokenField:(JSTokenField *)tokenField tokenTouchedUpInside:(JSTokenButton *)tokBtn;
 @end

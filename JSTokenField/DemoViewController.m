@@ -28,6 +28,7 @@
 
 #import "DemoViewController.h"
 #import "JSTokenField.h"
+#import "JSTokenButton.h"
 
 @implementation DemoViewController
 
@@ -62,7 +63,13 @@
 	[[_toField label] setText:@"To:"];
 	[_toField setDelegate:self];
 	[self.view addSubview:_toField];
-    
+	
+	//Enable to change default button texture and title color
+	[JSTokenButton setDefaultHighlightedButtonImage:[[UIImage imageNamed:@"tokenHighlightedDark"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
+	[JSTokenButton setDefaultNormalButtonImage:[[UIImage imageNamed:@"tokenNormalDark"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
+	[JSTokenButton setDefaultNormalButtonTitleColor:[UIColor whiteColor]];
+	[JSTokenButton setDefaultHighlightedButtonTitleColor:[UIColor blackColor]];
+	   
     UIView *separator1 = [[[UIView alloc] initWithFrame:CGRectMake(0, _toField.bounds.size.height-1, _toField.bounds.size.width, 1)] autorelease];
     [separator1 setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
     [_toField addSubview:separator1];
@@ -160,4 +167,11 @@
 	}
 }
 
+- (void)tokenField:(JSTokenField *)tokenField token:(JSTokenButton *)tokBtn toggledTo:(BOOL)toggleValue {
+	NSLog(@"Token %@ toggled to %d", tokBtn.representedObject, toggleValue);
+}
+
+- (void)tokenField:(JSTokenField *)tokenField tokenTouchedUpInside:(JSTokenButton *)tokBtn {
+	NSLog(@"Token button %@ touched", tokBtn.representedObject);
+}
 @end

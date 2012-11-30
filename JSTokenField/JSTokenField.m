@@ -48,6 +48,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (void)deleteHighlightedToken;
 
 - (void)commonSetup;
+
+@property (nonatomic, strong) UIImage *buttonNormalImage;
+@property (nonatomic, strong) UIImage *buttonHightlightedImage;
+@property (nonatomic, strong) UIColor *buttonNormalTitleColor;
+@property (nonatomic, strong) UIColor *buttonHighlightedTitleColor;
 @end
 
 
@@ -117,6 +122,10 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
                                              selector:@selector(handleTextDidChange:)
                                                  name:UITextFieldTextDidChangeNotification
                                                object:_textField];
+
+	//Initialize JSTokenButton background images to nil so the default background images are used by default
+	_buttonHightlightedImage = nil;
+	_buttonNormalImage = nil;
 }
 
 - (void)dealloc
@@ -146,7 +155,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		{
 			[self.delegate tokenField:self didAddToken:aString representedObject:obj];
 		}
-		
 		[self setNeedsLayout];
 	}
 }
@@ -215,7 +223,12 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
 {
-	JSTokenButton *token = [JSTokenButton tokenWithString:string representedObject:obj];
+	JSTokenButton *token = [JSTokenButton tokenWithString:string representedObject:obj
+												 normalBG:self.buttonNormalImage
+											highlightedBG:self.buttonHightlightedImage
+										 normalTitleColor:self.buttonNormalTitleColor
+									highlightedTitleColor:self.buttonHighlightedTitleColor];
+
 	CGRect frame = [token frame];
 	
 	if (frame.size.width > self.frame.size.width)
@@ -295,12 +308,24 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	for (JSTokenButton *token in _tokens)
 	{
-		[token setToggled:NO];
+		if (token != (JSTokenButton *)sender) {
+			[token setToggled:NO];
+			if ([self.delegate respondsToSelector:@selector(tokenField:token:toggledTo:)]) {
+				[self.delegate tokenField:self token:token toggledTo:NO];
+			}
+		}
+		else {
+			BOOL toggleValue = (token.isToggled)?NO:YES;
+			[token setToggled:toggleValue];
+			[token becomeFirstResponder];
+			if ([self.delegate respondsToSelector:@selector(tokenField:tokenTouchedUpInside:)]) {
+				[self.delegate tokenField:self tokenTouchedUpInside:token];
+			}
+			if ([self.delegate respondsToSelector:@selector(tokenField:token:toggledTo:)]) {
+				[self.delegate tokenField:self token:token toggledTo:toggleValue];
+			}
+		}
 	}
-	
-	JSTokenButton *token = (JSTokenButton *)sender;
-	[token setToggled:YES];
-    [token becomeFirstResponder];
 }
 
 - (void)setFrame:(CGRect)frame
@@ -319,6 +344,44 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	
 	if (CGRectEqualToRect(oldFrame, frame) == NO) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[[userInfo copy] autorelease]];
+	}
+}
+
+#pragma mark -
+#pragma mark JSTokenButton customization methods
+- (void)setNormalButtonImage:(UIImage *)image {
+	if (image != nil) {
+		self.buttonNormalImage = image;
+		for (JSTokenButton *token in _tokens) {
+			[token setNormalBg:self.buttonNormalImage];
+		}
+	}
+}
+
+- (void)setHighlightedButtonImage:(UIImage *)image {
+	if (image != nil) {
+		self.buttonHightlightedImage = image;
+		for (JSTokenButton *token in _tokens) {
+			[token setHighlightedBg:self.buttonHightlightedImage];
+		}
+	}
+}
+
+- (void)setNormalButtonTitleColor:(UIColor *)nColor {
+	if (nColor != nil) {
+		self.buttonNormalTitleColor = nColor;
+		for (JSTokenButton *token in _tokens) {
+			token.normalTitleColor = self.buttonNormalTitleColor;
+		}
+	}
+}
+
+- (void)setHighlightedButtonTitleColor:(UIColor *)hColor {
+	if (hColor != nil) {
+		self.buttonHighlightedTitleColor = hColor;
+		for (JSTokenButton *token in _tokens) {
+			token.highlightedTitleColor = self.buttonHighlightedTitleColor;
+		}
 	}
 }
 

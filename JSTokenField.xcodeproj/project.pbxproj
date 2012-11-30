@@ -23,6 +23,10 @@
 		1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */; };
 		1A1A06CF13FF000C00CA6645 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CD13FF000C00CA6645 /* AddressBook.framework */; };
 		1A1A06D013FF000C00CA6645 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */; };
+		8223ECC516672B0100221221 /* tokenHighlightedDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8223ECC116672B0100221221 /* tokenHighlightedDark.png */; };
+		8223ECC616672B0100221221 /* tokenHighlightedDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8223ECC216672B0100221221 /* tokenHighlightedDark@2x.png */; };
+		8223ECC716672B0100221221 /* tokenNormalDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8223ECC316672B0100221221 /* tokenNormalDark.png */; };
+		8223ECC816672B0100221221 /* tokenNormalDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8223ECC416672B0100221221 /* tokenNormalDark@2x.png */; };
 		B71650D1144399F800EBF2C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A069C13FEDEEC00CA6645 /* Foundation.framework */; };
 		B71650DB14439A0500EBF2C7 /* JSTokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A1A06B913FEE01C00CA6645 /* JSTokenField.h */; };
 		B71650DC14439A0500EBF2C7 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */; };
@@ -54,6 +58,10 @@
 		1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
 		1A1A06CD13FF000C00CA6645 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		8223ECC116672B0100221221 /* tokenHighlightedDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenHighlightedDark.png; sourceTree = "<group>"; };
+		8223ECC216672B0100221221 /* tokenHighlightedDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenHighlightedDark@2x.png"; sourceTree = "<group>"; };
+		8223ECC316672B0100221221 /* tokenNormalDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenNormalDark.png; sourceTree = "<group>"; };
+		8223ECC416672B0100221221 /* tokenNormalDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormalDark@2x.png"; sourceTree = "<group>"; };
 		B71650D0144399F800EBF2C7 /* libJSTokenFieldLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSTokenFieldLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -131,6 +139,10 @@
 		1A1A06A113FEDEEC00CA6645 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8223ECC116672B0100221221 /* tokenHighlightedDark.png */,
+				8223ECC216672B0100221221 /* tokenHighlightedDark@2x.png */,
+				8223ECC316672B0100221221 /* tokenNormalDark.png */,
+				8223ECC416672B0100221221 /* tokenNormalDark@2x.png */,
 				1A1A06A213FEDEEC00CA6645 /* JSTokenField-Info.plist */,
 				1A1A06A313FEDEEC00CA6645 /* InfoPlist.strings */,
 				1A1A06A613FEDEEC00CA6645 /* main.m */,
@@ -230,6 +242,10 @@
 				1A1A06C213FEE2D900CA6645 /* tokenHighlighted@2x.png in Resources */,
 				1A1A06C313FEE2D900CA6645 /* tokenNormal.png in Resources */,
 				1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */,
+				8223ECC516672B0100221221 /* tokenHighlightedDark.png in Resources */,
+				8223ECC616672B0100221221 /* tokenHighlightedDark@2x.png in Resources */,
+				8223ECC716672B0100221221 /* tokenNormalDark.png in Resources */,
+				8223ECC816672B0100221221 /* tokenNormalDark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
