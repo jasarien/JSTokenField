@@ -145,7 +145,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	NSString *aString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 	
-    [_textField setText:nil];
+    [_textField setText:ZERO_WIDTH_SPACE_STRING];
     
 	if ([aString length])
 	{
