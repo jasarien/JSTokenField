@@ -35,7 +35,7 @@
 @optional
 
 - (NSArray *)tokenField:(JSTokenField *)tokenField tokenIdentifiersForString:(NSString *)untokenizedText;
-- (NSString *)labelForIdentifier:(id)identifier;
+- (NSString *)tokenField:(JSTokenField *)tokenField labelForIdentifier:(id)identifier;
 
 - (void)tokenField:(JSTokenField *)tokenField didAddTokenWithIdentifier:(id)identifier;
 - (void)tokenField:(JSTokenField *)tokenField didRemoveTokenWithIdentifier:(id)identifier;

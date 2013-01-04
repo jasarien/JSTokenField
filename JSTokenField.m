@@ -337,14 +337,12 @@
 			continue;
 		
 		NSString *labelText = nil;
-		if([self.delegate respondsToSelector:@selector(labelForIdentifier:)]) {
-			labelText = [self.delegate labelForIdentifier:tokenIdentifier];
-		}
+		if([self.delegate respondsToSelector:@selector(tokenField:labelForIdentifier:)])
+			labelText = [self.delegate tokenField:self labelForIdentifier:tokenIdentifier];
 		
-		if(!labelText) {
-			// Otherwise use the tokenIdentifier as the tokens label
+		// Otherwise if its a string use the tokenIdentifier for the tokens label
+		if(!labelText)
 			labelText = tokenIdentifier;
-		}
 		
 		if([labelText isKindOfClass:[NSString class]] && [labelText length] > 0) {
 			[self addTokenWithLabel:labelText forIdentifier:tokenIdentifier];
