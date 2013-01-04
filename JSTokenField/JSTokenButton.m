@@ -107,6 +107,7 @@
 #pragma mark - UIKeyInput
 - (void)deleteBackward {
     [_parentField removeTokenForString:[self titleForState:UIControlStateNormal]];
+	[_parentField becomeFirstResponder];
 }
 
 - (BOOL)hasText {
