@@ -26,48 +26,22 @@
 //	or implied, of James Addyman (JamSoft).
 //
 
+
+
 #import <UIKit/UIKit.h>
 
-@class JSTokenButton;
-@protocol JSTokenFieldDelegate;
 
-extern NSString *const JSTokenFieldFrameDidChangeNotification;
-extern NSString *const JSTokenFieldNewFrameKey;
-extern NSString *const JSTokenFieldOldFrameKey;
-extern NSString *const JSDeletedTokenKey;
+@class JSTokenField;
 
-@interface JSTokenField : UIView <UITextFieldDelegate> {
-	
-	NSMutableArray *_tokens;
-	
-	UITextField *_textField;
-	
-	id <JSTokenFieldDelegate> _delegate;
-	
-	JSTokenButton *_deletedToken;
-	
-	UILabel *_label;
-}
 
-@property (nonatomic, readonly) UITextField *textField;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, readonly, copy) NSMutableArray *tokens;
-@property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
+@interface JSTokenButton : UIButton <UIKeyInput>
 
-- (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
-- (void)removeTokenForString:(NSString *)string;
-- (void)removeTokenWithRepresentedObject:(id)representedObject;
+@property (nonatomic, retain) id representedObject;
+@property (nonatomic, assign) JSTokenField *parentField;
+@property (nonatomic, getter=isActive) BOOL active;
+@property (nonatomic, retain) UIImage *normalBg;
+@property (nonatomic, retain) UIImage *highlightedBg;
 
-@end
-
-@protocol JSTokenFieldDelegate <NSObject>
-
-@optional
-
-- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
-- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj;
-
-- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField;
-- (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
++ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
 
 @end

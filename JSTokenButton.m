@@ -30,96 +30,99 @@
 #import "JSTokenField.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 @implementation JSTokenButton
 
-@synthesize toggled = _toggled;
-@synthesize normalBg = _normalBg;
-@synthesize highlightedBg = _highlightedBg;
-@synthesize representedObject = _representedObject;
-@synthesize parentField = _parentField;
 
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
++ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)representedObject
 {
 	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
-	[button setNormalBg:[[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
-	[button setHighlightedBg:[[UIImage imageNamed:@"tokenHighlighted.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
-	[button setAdjustsImageWhenHighlighted:NO];
+	button.adjustsImageWhenHighlighted = FALSE;
+	button.normalBg = [[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+	button.highlightedBg = [[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+	
 	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[[button titleLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
-	[[button titleLabel] setLineBreakMode:UILineBreakModeTailTruncation];
+	[[button titleLabel] setLineBreakMode:NSLineBreakByTruncatingTail];
 	[button setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
-	
 	[button setTitle:string forState:UIControlStateNormal];
 	
 	[button sizeToFit];
+	
+	// Calculate the
 	CGRect frame = [button frame];
 	frame.size.width += 20;
 	frame.size.height = 25;
-	[button setFrame:frame];
 	
-	[button setToggled:NO];
-	
-	[button setRepresentedObject:obj];
+	button.frame = frame;
+	button.active =FALSE;
+	button.representedObject = representedObject;
 	
 	return button;
 }
 
-- (void)setToggled:(BOOL)toggled
+
+- (void)setActive:(BOOL)active
 {
-	_toggled = toggled;
+	_active = active;
 	
-	if (_toggled)
-	{
+	if(active) {
 		[self setBackgroundImage:self.highlightedBg forState:UIControlStateNormal];
 		[self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	}
-	else
-	{
+	} else {
 		[self setBackgroundImage:self.normalBg forState:UIControlStateNormal];
 		[self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	}
 }
 
-- (void)dealloc
+
+- (BOOL)canBecomeFirstResponder
 {
-	self.representedObject = nil;
-	self.highlightedBg = nil;
-	self.normalBg = nil;
-    [super dealloc];
+    return YES;
 }
 
-- (BOOL)becomeFirstResponder {
-    BOOL superReturn = [super becomeFirstResponder];
-    if (superReturn) {
-        self.toggled = YES;
-    }
-    return superReturn;
+
+- (BOOL)becomeFirstResponder
+{
+	BOOL shouldBecomeFirstResponder = [super becomeFirstResponder];
+	
+	if(shouldBecomeFirstResponder)
+		self.active = TRUE;
+	
+    return shouldBecomeFirstResponder;
 }
 
-- (BOOL)resignFirstResponder {
-    BOOL superReturn = [super resignFirstResponder];
-    if (superReturn) {
-        self.toggled = NO;
-    }
-    return superReturn;
+
+- (BOOL)resignFirstResponder
+{
+	BOOL shouldResignFirstResponder = [super resignFirstResponder];
+	
+	if(shouldResignFirstResponder)
+		self.active = FALSE;
+	
+    return shouldResignFirstResponder;
 }
+
+
 
 #pragma mark - UIKeyInput
-- (void)deleteBackward {
+
+- (void)deleteBackward
+{
     [_parentField removeTokenForString:[self titleForState:UIControlStateNormal]];
 	[_parentField becomeFirstResponder];
 }
 
-- (BOOL)hasText {
+
+- (BOOL)hasText
+{
     return NO;
 }
-- (void)insertText:(NSString *)text {
-    return;
+
+- (void)insertText:(NSString *)text
+{
 }
 
 
-- (BOOL)canBecomeFirstResponder {
-    return YES;
-}
 
 @end

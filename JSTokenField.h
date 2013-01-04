@@ -27,28 +27,38 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class JSTokenField;
 
-@interface JSTokenButton : UIButton <UIKeyInput> {
 
-	BOOL _toggled;
-	
-	UIImage *_normalBg;
-	UIImage *_highlightedBg;
-	
-	id _representedObject;
-	
-}
+@protocol JSTokenFieldDelegate <NSObject>
+@optional
 
-@property (nonatomic, getter=isToggled) BOOL toggled;
+- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
+- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj;
 
-@property (nonatomic, retain) UIImage *normalBg;
-@property (nonatomic, retain) UIImage *highlightedBg;
+- (NSArray *)tokenField:(JSTokenField *)tokenField tokensForText:(NSString *)rawText;
+- (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
 
-@property (nonatomic, retain) id representedObject;
 
-@property (nonatomic, assign) JSTokenField *parentField;
+@end
 
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
+
+
+extern NSString *const JSTokenFieldFrameDidChangeNotification;
+extern NSString *const JSTokenFieldNewFrameKey;
+extern NSString *const JSTokenFieldOldFrameKey;
+extern NSString *const JSDeletedTokenKey;
+
+@interface JSTokenField : UIView <UITextFieldDelegate>
+
+@property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
+@property (nonatomic, readonly, copy) NSMutableArray *tokens;
+@property (nonatomic, retain) UILabel *label;
+@property (nonatomic, readonly) UITextField *textField;
+
+- (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
+- (void)removeTokenForString:(NSString *)string;
+- (void)removeTokenWithRepresentedObject:(id)representedObject;
 
 @end
