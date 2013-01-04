@@ -34,31 +34,27 @@
 @protocol JSTokenFieldDelegate <NSObject>
 @optional
 
-- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
-- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj;
+- (NSArray *)tokenField:(JSTokenField *)tokenField tokenIdentifiersForString:(NSString *)untokenizedText;
+- (NSString *)labelForIdentifier:(id)identifier;
 
-- (NSArray *)tokenField:(JSTokenField *)tokenField tokensForText:(NSString *)rawText;
+- (void)tokenField:(JSTokenField *)tokenField didAddTokenWithIdentifier:(id)identifier;
+- (void)tokenField:(JSTokenField *)tokenField didRemoveTokenWithIdentifier:(id)identifier;
 - (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
-
 
 @end
 
 
-
-extern NSString *const JSTokenFieldFrameDidChangeNotification;
-extern NSString *const JSTokenFieldNewFrameKey;
-extern NSString *const JSTokenFieldOldFrameKey;
-extern NSString *const JSDeletedTokenKey;
 
 @interface JSTokenField : UIView <UITextFieldDelegate>
 
 @property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
-@property (nonatomic, readonly, copy) NSMutableArray *tokens;
 @property (nonatomic, retain) UILabel *label;
 @property (nonatomic, readonly) UITextField *textField;
 
-- (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
-- (void)removeTokenForString:(NSString *)string;
-- (void)removeTokenWithRepresentedObject:(id)representedObject;
+- (NSArray *)allTokens;
+
+- (void)addTokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier;
+- (void)removeTokenForIdentifier:(id)identifier;
 
 @end
+

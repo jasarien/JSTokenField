@@ -27,7 +27,6 @@
 //
 
 
-
 #import <UIKit/UIKit.h>
 
 
@@ -36,12 +35,14 @@
 
 @interface JSTokenButton : UIButton <UIKeyInput>
 
-@property (nonatomic, retain) id representedObject;
-@property (nonatomic, assign) JSTokenField *parentField;
+@property (nonatomic, retain) id identifier;
 @property (nonatomic, getter=isActive) BOOL active;
-@property (nonatomic, retain) UIImage *normalBg;
-@property (nonatomic, retain) UIImage *highlightedBg;
 
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
+@property (nonatomic, assign) JSTokenField *parentField;
+@property (nonatomic, retain) UIImage *normalBackgroundImage, *highlightedBackgroundImage;
+
+
++ (JSTokenButton *)tokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier;
+
 
 @end

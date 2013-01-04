@@ -26,6 +26,7 @@
 //	or implied, of James Addyman (JamSoft).
 //
 
+
 #import "JSTokenButton.h"
 #import "JSTokenField.h"
 #import <QuartzCore/QuartzCore.h>
@@ -34,43 +35,52 @@
 @implementation JSTokenButton
 
 
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)representedObject
++ (JSTokenButton *)tokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier
 {
-	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
-	button.adjustsImageWhenHighlighted = FALSE;
-	button.normalBg = [[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
-	button.highlightedBg = [[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+	JSTokenButton *token = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
+	token.identifier = identifier;
+	token.active = FALSE;
 	
-	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[[button titleLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
-	[[button titleLabel] setLineBreakMode:NSLineBreakByTruncatingTail];
-	[button setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
-	[button setTitle:string forState:UIControlStateNormal];
+	// Set the background appearance
+	token.adjustsImageWhenHighlighted = FALSE;
+	token.normalBackgroundImage = [[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+	token.highlightedBackgroundImage = [[UIImage imageNamed:@"tokenHighlighted.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
 	
-	[button sizeToFit];
+	// Style the buttons appearance
+	[token setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[token.titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
+	[token.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+	[token setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
+	[token setTitle:labelText forState:UIControlStateNormal];
 	
-	// Calculate the
-	CGRect frame = [button frame];
+	// Adjust the tokens frame
+	[token sizeToFit];
+	
+	CGRect frame = [token frame];
 	frame.size.width += 20;
 	frame.size.height = 25;
+	token.frame = frame;
 	
-	button.frame = frame;
-	button.active =FALSE;
-	button.representedObject = representedObject;
+	[token updateAppearance];
 	
-	return button;
+	return token;
 }
-
 
 - (void)setActive:(BOOL)active
 {
 	_active = active;
 	
-	if(active) {
-		[self setBackgroundImage:self.highlightedBg forState:UIControlStateNormal];
+	[self updateAppearance];
+}
+
+
+- (void)updateAppearance
+{
+	if([self isActive]) {
+		[self setBackgroundImage:self.highlightedBackgroundImage forState:UIControlStateNormal];
 		[self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	} else {
-		[self setBackgroundImage:self.normalBg forState:UIControlStateNormal];
+		[self setBackgroundImage:self.normalBackgroundImage forState:UIControlStateNormal];
 		[self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	}
 }
@@ -109,8 +119,8 @@
 
 - (void)deleteBackward
 {
-    [_parentField removeTokenForString:[self titleForState:UIControlStateNormal]];
-	[_parentField becomeFirstResponder];
+	[self.parentField removeTokenForIdentifier:self.identifier];
+	[self.parentField becomeFirstResponder];
 }
 
 
@@ -118,6 +128,7 @@
 {
     return NO;
 }
+
 
 - (void)insertText:(NSString *)text
 {
