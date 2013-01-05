@@ -48,10 +48,15 @@
 @interface JSTokenField : UIView <UITextFieldDelegate>
 
 @property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, readonly) UITextField *textField;
+@property (nonatomic, readonly, retain) UILabel *label;
+@property (nonatomic, readonly, retain) UITextField *textField;
+
+@property (nonatomic, assign) UIEdgeInsets contentInsets;
+@property (nonatomic, assign) CGSize tokenPadding;
 
 - (NSArray *)allTokens;
+- (void)addTokenIdentifiers:(NSArray *)tokenIdentifiers;
+- (void)removeAllTokens;
 
 - (void)addTokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier;
 - (void)removeTokenForIdentifier:(id)identifier;

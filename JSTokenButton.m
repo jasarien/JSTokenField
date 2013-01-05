@@ -95,7 +95,6 @@
 - (BOOL)becomeFirstResponder
 {
 	BOOL shouldBecomeFirstResponder = [super becomeFirstResponder];
-	
 	if(shouldBecomeFirstResponder)
 		self.active = TRUE;
 	
@@ -106,7 +105,6 @@
 - (BOOL)resignFirstResponder
 {
 	BOOL shouldResignFirstResponder = [super resignFirstResponder];
-	
 	if(shouldResignFirstResponder)
 		self.active = FALSE;
 	
@@ -119,8 +117,8 @@
 
 - (void)deleteBackward
 {
-	[self.parentField removeTokenForIdentifier:self.identifier];
 	[self.parentField becomeFirstResponder];
+	[self.parentField removeTokenForIdentifier:self.identifier];
 }
 
 

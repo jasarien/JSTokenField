@@ -30,17 +30,14 @@
 #import "JSTokenButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-
-#define HEIGHT_PADDING 3
-#define WIDTH_PADDING 3
-#define DEFAULT_HEIGHT 31
 #define ZERO_WIDTH_SPACE_STRING @"\u200B"
 
 
 @interface JSTokenField ()
-@property (nonatomic, readwrite) UITextField *textField;
-@property (nonatomic, strong) NSMutableArray *tokens;
 
+@property (nonatomic, strong) NSMutableArray *tokens;
+@property (nonatomic, readwrite, retain) UITextField *textField;
+@property (nonatomic, readwrite, retain) UILabel *label;
 
 @end
 
@@ -77,11 +74,14 @@
 {
 	self.tokens = [[NSMutableArray alloc] init];
 	
-	
 	// Setup the fields appearance views
     [self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
 	
     CGRect frame = self.frame;
+	UIEdgeInsets contentInsets = UIEdgeInsetsMake(3, 3, 3, 3);
+	self.tokenPadding = CGSizeMake(5, 5);
+	self.contentInsets = contentInsets;
+	
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextColor:[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1.0]];
@@ -89,8 +89,8 @@
     [self addSubview:label];
 	self.label = label;
     
-    frame.origin.y += HEIGHT_PADDING;
-    frame.size.height -= HEIGHT_PADDING * 2;
+    frame.origin.y += contentInsets.top;
+    frame.size.height -= contentInsets.top + contentInsets.bottom;
 	
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
     [textField setDelegate:self];
@@ -121,10 +121,7 @@
 
 - (BOOL)becomeFirstResponder
 {
-	if([super becomeFirstResponder])
-		return [self.textField becomeFirstResponder];
-	
-	return FALSE;
+	return [self.textField becomeFirstResponder];
 }
 
 
@@ -144,25 +141,27 @@
 - (void)layoutSubviews
 {
 	[_label sizeToFit];
-	[_label setFrame:CGRectMake(WIDTH_PADDING, HEIGHT_PADDING, [_label frame].size.width, [_label frame].size.height + 3)];
+	
+	CGRect labelFrame = CGRectMake(_contentInsets.left, _contentInsets.top, [_label frame].size.width, [_label frame].size.height + 3);
+	_label.frame = labelFrame;
 	
 	CGRect currentRect = CGRectZero;
-	currentRect.origin.x += _label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING;
+	currentRect.origin.x += labelFrame.size.width + labelFrame.origin.x + _tokenPadding.width;
 	
 	for(UIButton *token in self.tokens) {
 		CGRect frame = [token frame];
 		
 		if((currentRect.origin.x + frame.size.width) > self.frame.size.width)
-			currentRect.origin = CGPointMake(WIDTH_PADDING, (currentRect.origin.y + frame.size.height + HEIGHT_PADDING));
+			currentRect.origin = CGPointMake(_contentInsets.left, (currentRect.origin.y + frame.size.height + _tokenPadding.height));
 		
 		frame.origin.x = currentRect.origin.x;
-		frame.origin.y = currentRect.origin.y + HEIGHT_PADDING;
+		frame.origin.y = currentRect.origin.y + _contentInsets.top - 1;
 		[token setFrame:frame];
 		
 		if(![token superview])
 			[self addSubview:token];
 		
-		currentRect.origin.x += frame.size.width + WIDTH_PADDING;
+		currentRect.origin.x += frame.size.width + _tokenPadding.width;
 		currentRect.size = frame.size;
 	}
 	
@@ -171,13 +170,13 @@
 	textFieldFrame.origin = currentRect.origin;
 	
 	if((self.frame.size.width - textFieldFrame.origin.x) >= 60) {
-		textFieldFrame.size.width = self.frame.size.width - textFieldFrame.origin.x;
+		textFieldFrame.size.width = self.frame.size.width - textFieldFrame.origin.x - _contentInsets.right;
 	} else {
-		textFieldFrame.size.width = self.frame.size.width;
-        textFieldFrame.origin = CGPointMake(WIDTH_PADDING * 2, (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
+		textFieldFrame.size.width = self.frame.size.width - _contentInsets.right;
+        textFieldFrame.origin = CGPointMake(_contentInsets.left, (currentRect.origin.y + currentRect.size.height + _contentInsets.top));
 	}
 	
-	textFieldFrame.origin.y += HEIGHT_PADDING;
+	textFieldFrame.origin.y += _contentInsets.top;
 	self.textField.frame = textFieldFrame;
 }
 
@@ -192,8 +191,29 @@
 }
 
 
+- (void)addTokenIdentifiers:(NSArray *)tokenIdentifiers
+{
+	for(id identifiers in tokenIdentifiers) {
+		NSString *labelText = [self labelForTokenIdentifier:identifiers];
+		
+		[self addTokenWithLabel:labelText forIdentifier:identifiers];
+	}
+}
+
+
+- (void)removeAllTokens
+{
+	for(JSTokenButton *token in [self allTokens]) {
+		[self removeToken:token];
+	}
+}
+
+
 - (void)addTokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier
 {
+	if([labelText length] == 0)
+		return;
+	
     [self.textField setText:ZERO_WIDTH_SPACE_STRING];
 	labelText = [labelText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
@@ -202,8 +222,9 @@
         token.parentField = self;
 		
 		CGRect frame = [token frame];
+		
 		if(frame.size.width > self.frame.size.width)
-			frame.size.width = self.frame.size.width - (WIDTH_PADDING * 2);
+			frame.size.width = self.frame.size.width - _contentInsets.left - _contentInsets.right;
 		
 		token.frame = frame;
 		[token addTarget:self action:@selector(selectToken:) forControlEvents:UIControlEventTouchUpInside];
@@ -336,18 +357,28 @@
 		if([tokenIdentifier length] == 0)
 			continue;
 		
-		NSString *labelText = nil;
-		if([self.delegate respondsToSelector:@selector(tokenField:labelForIdentifier:)])
-			labelText = [self.delegate tokenField:self labelForIdentifier:tokenIdentifier];
-		
-		// Otherwise if its a string use the tokenIdentifier for the tokens label
-		if(!labelText)
-			labelText = tokenIdentifier;
-		
-		if([labelText isKindOfClass:[NSString class]] && [labelText length] > 0) {
-			[self addTokenWithLabel:labelText forIdentifier:tokenIdentifier];
-		}
+		NSString *labelText = [self labelForTokenIdentifier:tokenIdentifier];
+		[self addTokenWithLabel:labelText forIdentifier:tokenIdentifier];
 	}
+}
+
+
+- (NSString *)labelForTokenIdentifier:(id)identifier
+{
+	NSString *labelText = nil;
+	
+	if([self.delegate respondsToSelector:@selector(tokenField:labelForIdentifier:)])
+		labelText = [self.delegate tokenField:self labelForIdentifier:identifier];
+	
+	// Otherwise if its a string use the tokenIdentifier for the tokens label
+	if(!labelText)
+		labelText = identifier;
+	
+	// Make sure that the label is a string
+	if([labelText isKindOfClass:[NSString class]] && [labelText length] > 0)
+		return labelText;
+	
+	return nil;
 }
 
 
