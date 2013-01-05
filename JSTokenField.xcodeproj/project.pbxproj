@@ -12,9 +12,6 @@
 		1A1A069F13FEDEEC00CA6645 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A069E13FEDEEC00CA6645 /* CoreGraphics.framework */; };
 		1A1A06A513FEDEEC00CA6645 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06A313FEDEEC00CA6645 /* InfoPlist.strings */; };
 		1A1A06A713FEDEEC00CA6645 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06A613FEDEEC00CA6645 /* main.m */; };
-		1A1A06AB13FEDEEC00CA6645 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */; };
-		1A1A06AE13FEDEEC00CA6645 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */; };
-		1A1A06B113FEDEEC00CA6645 /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */; };
 		1A1A06BB13FEE01C00CA6645 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */; };
 		1A1A06BC13FEE01C00CA6645 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */; };
 		1A1A06C113FEE2D900CA6645 /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06BD13FEE2D900CA6645 /* tokenHighlighted.png */; };
@@ -23,6 +20,8 @@
 		1A1A06C413FEE2D900CA6645 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */; };
 		1A1A06CF13FF000C00CA6645 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CD13FF000C00CA6645 /* AddressBook.framework */; };
 		1A1A06D013FF000C00CA6645 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */; };
+		4A3D75BE169735DB000AB0B5 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D75BB169735DB000AB0B5 /* DemoAppDelegate.m */; };
+		4A3D75BF169735DB000AB0B5 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D75BD169735DB000AB0B5 /* DemoViewController.m */; };
 		B71650D1144399F800EBF2C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1A069C13FEDEEC00CA6645 /* Foundation.framework */; };
 		B71650DB14439A0500EBF2C7 /* JSTokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A1A06B913FEE01C00CA6645 /* JSTokenField.h */; };
 		B71650DC14439A0500EBF2C7 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */; };
@@ -39,11 +38,6 @@
 		1A1A06A413FEDEEC00CA6645 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1A1A06A613FEDEEC00CA6645 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1A1A06A813FEDEEC00CA6645 /* JSTokenField-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSTokenField-Prefix.pch"; sourceTree = "<group>"; };
-		1A1A06A913FEDEEC00CA6645 /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
-		1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
-		1A1A06AC13FEDEEC00CA6645 /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
-		1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
-		1A1A06B013FEDEEC00CA6645 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DemoViewController.xib; sourceTree = "<group>"; };
 		1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenButton.h; sourceTree = "<group>"; };
 		1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenButton.m; sourceTree = "<group>"; };
 		1A1A06B913FEE01C00CA6645 /* JSTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenField.h; sourceTree = "<group>"; };
@@ -54,6 +48,10 @@
 		1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
 		1A1A06CD13FF000C00CA6645 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		4A3D75BA169735DB000AB0B5 /* DemoAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoAppDelegate.h; path = "Demo App/DemoAppDelegate.h"; sourceTree = SOURCE_ROOT; };
+		4A3D75BB169735DB000AB0B5 /* DemoAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoAppDelegate.m; path = "Demo App/DemoAppDelegate.m"; sourceTree = SOURCE_ROOT; };
+		4A3D75BC169735DB000AB0B5 /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoViewController.h; path = "Demo App/DemoViewController.h"; sourceTree = SOURCE_ROOT; };
+		4A3D75BD169735DB000AB0B5 /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoViewController.m; path = "Demo App/DemoViewController.m"; sourceTree = SOURCE_ROOT; };
 		B71650D0144399F800EBF2C7 /* libJSTokenFieldLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSTokenFieldLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -84,7 +82,9 @@
 		1A1A068B13FEDEEC00CA6645 = {
 			isa = PBXGroup;
 			children = (
+				4A3D75C216973601000AB0B5 /* Demo App Controller */,
 				1A1A06A013FEDEEC00CA6645 /* JSTokenField */,
+				1A1A06A113FEDEEC00CA6645 /* Supporting Files */,
 				1A1A069913FEDEEC00CA6645 /* Frameworks */,
 				1A1A069713FEDEEC00CA6645 /* Products */,
 			);
@@ -114,16 +114,10 @@
 		1A1A06A013FEDEEC00CA6645 /* JSTokenField */ = {
 			isa = PBXGroup;
 			children = (
-				1A1A06A913FEDEEC00CA6645 /* DemoAppDelegate.h */,
-				1A1A06AA13FEDEEC00CA6645 /* DemoAppDelegate.m */,
-				1A1A06AC13FEDEEC00CA6645 /* DemoViewController.h */,
-				1A1A06AD13FEDEEC00CA6645 /* DemoViewController.m */,
 				1A1A06B913FEE01C00CA6645 /* JSTokenField.h */,
 				1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */,
 				1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */,
 				1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */,
-				1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */,
-				1A1A06A113FEDEEC00CA6645 /* Supporting Files */,
 			);
 			path = JSTokenField;
 			sourceTree = "<group>";
@@ -141,6 +135,18 @@
 				1A1A06C013FEE2D900CA6645 /* tokenNormal@2x.png */,
 			);
 			name = "Supporting Files";
+			path = JSTokenField;
+			sourceTree = "<group>";
+		};
+		4A3D75C216973601000AB0B5 /* Demo App Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4A3D75BA169735DB000AB0B5 /* DemoAppDelegate.h */,
+				4A3D75BB169735DB000AB0B5 /* DemoAppDelegate.m */,
+				4A3D75BC169735DB000AB0B5 /* DemoViewController.h */,
+				4A3D75BD169735DB000AB0B5 /* DemoViewController.m */,
+			);
+			name = "Demo App Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,7 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A1A06A513FEDEEC00CA6645 /* InfoPlist.strings in Resources */,
-				1A1A06B113FEDEEC00CA6645 /* DemoViewController.xib in Resources */,
 				1A1A06C113FEE2D900CA6645 /* tokenHighlighted.png in Resources */,
 				1A1A06C213FEE2D900CA6645 /* tokenHighlighted@2x.png in Resources */,
 				1A1A06C313FEE2D900CA6645 /* tokenNormal.png in Resources */,
@@ -241,10 +246,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A1A06A713FEDEEC00CA6645 /* main.m in Sources */,
-				1A1A06AB13FEDEEC00CA6645 /* DemoAppDelegate.m in Sources */,
-				1A1A06AE13FEDEEC00CA6645 /* DemoViewController.m in Sources */,
 				1A1A06BB13FEE01C00CA6645 /* JSTokenButton.m in Sources */,
 				1A1A06BC13FEE01C00CA6645 /* JSTokenField.m in Sources */,
+				4A3D75BE169735DB000AB0B5 /* DemoAppDelegate.m in Sources */,
+				4A3D75BF169735DB000AB0B5 /* DemoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,14 +271,6 @@
 				1A1A06A413FEDEEC00CA6645 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1A1A06B013FEDEEC00CA6645 /* en */,
-			);
-			name = DemoViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

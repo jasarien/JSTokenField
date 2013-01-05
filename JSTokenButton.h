@@ -26,29 +26,23 @@
 //	or implied, of James Addyman (JamSoft).
 //
 
+
 #import <UIKit/UIKit.h>
+
+
 @class JSTokenField;
 
-@interface JSTokenButton : UIButton <UIKeyInput> {
 
-	BOOL _toggled;
-	
-	UIImage *_normalBg;
-	UIImage *_highlightedBg;
-	
-	id _representedObject;
-	
-}
+@interface JSTokenButton : UIButton <UIKeyInput>
 
-@property (nonatomic, getter=isToggled) BOOL toggled;
-
-@property (nonatomic, retain) UIImage *normalBg;
-@property (nonatomic, retain) UIImage *highlightedBg;
-
-@property (nonatomic, retain) id representedObject;
+@property (nonatomic, retain) id identifier;
+@property (nonatomic, getter=isActive) BOOL active;
 
 @property (nonatomic, assign) JSTokenField *parentField;
+@property (nonatomic, retain) UIImage *normalBackgroundImage, *highlightedBackgroundImage;
 
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
+
++ (JSTokenButton *)tokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier;
+
 
 @end

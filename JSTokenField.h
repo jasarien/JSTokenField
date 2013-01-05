@@ -28,46 +28,38 @@
 
 #import <UIKit/UIKit.h>
 
-@class JSTokenButton;
-@protocol JSTokenFieldDelegate;
+@class JSTokenField;
 
-extern NSString *const JSTokenFieldFrameDidChangeNotification;
-extern NSString *const JSTokenFieldNewFrameKey;
-extern NSString *const JSTokenFieldOldFrameKey;
-extern NSString *const JSDeletedTokenKey;
-
-@interface JSTokenField : UIView <UITextFieldDelegate> {
-	
-	NSMutableArray *_tokens;
-	
-	UITextField *_textField;
-	
-	id <JSTokenFieldDelegate> _delegate;
-	
-	JSTokenButton *_deletedToken;
-	
-	UILabel *_label;
-}
-
-@property (nonatomic, readonly) UITextField *textField;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, readonly, copy) NSMutableArray *tokens;
-@property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
-
-- (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
-- (void)removeTokenForString:(NSString *)string;
-- (void)removeTokenWithRepresentedObject:(id)representedObject;
-
-@end
 
 @protocol JSTokenFieldDelegate <NSObject>
-
 @optional
 
-- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
-- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj;
+- (NSArray *)tokenField:(JSTokenField *)tokenField tokenIdentifiersForString:(NSString *)untokenizedText;
+- (NSString *)tokenField:(JSTokenField *)tokenField labelForIdentifier:(id)identifier;
 
-- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField;
+- (void)tokenField:(JSTokenField *)tokenField didAddTokenWithIdentifier:(id)identifier;
+- (void)tokenField:(JSTokenField *)tokenField didRemoveTokenWithIdentifier:(id)identifier;
 - (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
 
 @end
+
+
+
+@interface JSTokenField : UIView <UITextFieldDelegate>
+
+@property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
+@property (nonatomic, readonly, retain) UILabel *label;
+@property (nonatomic, readonly, retain) UITextField *textField;
+
+@property (nonatomic, assign) UIEdgeInsets contentInsets;
+@property (nonatomic, assign) CGSize tokenPadding;
+
+- (NSArray *)allTokens;
+- (void)addTokenIdentifiers:(NSArray *)tokenIdentifiers;
+- (void)removeAllTokens;
+
+- (void)addTokenWithLabel:(NSString *)labelText forIdentifier:(id)identifier;
+- (void)removeTokenForIdentifier:(id)identifier;
+
+@end
+
