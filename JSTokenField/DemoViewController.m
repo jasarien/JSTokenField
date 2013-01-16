@@ -119,6 +119,14 @@
 
 }
 
+- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj
+{
+	NSDictionary *recipient = [NSDictionary dictionaryWithObject:obj forKey:title];
+	[_toRecipients removeObject:recipient];
+	NSLog(@"Removed token for < %@ : %@ >\n%@", title, obj, _toRecipients);
+    
+}
+
 - (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
 {	
 	[_toRecipients removeObjectAtIndex:index];
