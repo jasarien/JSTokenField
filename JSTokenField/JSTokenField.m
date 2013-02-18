@@ -113,15 +113,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     
     [self addSubview:_textField];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTextDidChange:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:_textField];
+    [self.textField addTarget:self action:@selector(textFieldWasUpdated:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[_textField release], _textField = nil;
 	[_label release], _label = nil;
 	[_tokens release], _tokens = nil;
