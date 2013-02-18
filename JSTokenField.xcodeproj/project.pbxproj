@@ -28,6 +28,8 @@
 		B71650DC14439A0500EBF2C7 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06BA13FEE01C00CA6645 /* JSTokenField.m */; };
 		B71650DD14439A0500EBF2C7 /* JSTokenButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A1A06B713FEE01C00CA6645 /* JSTokenButton.h */; };
 		B71650DE14439A0500EBF2C7 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */; };
+		B7A8303716D2D21500E7587F /* JSBackspaceReportingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8303616D2D21500E7587F /* JSBackspaceReportingTextField.m */; };
+		B7A8303816D2D2E700E7587F /* JSBackspaceReportingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8303616D2D21500E7587F /* JSBackspaceReportingTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		1A1A06CD13FF000C00CA6645 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1A1A06CE13FF000C00CA6645 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		B71650D0144399F800EBF2C7 /* libJSTokenFieldLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSTokenFieldLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7A8303516D2D21500E7587F /* JSBackspaceReportingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBackspaceReportingTextField.h; sourceTree = "<group>"; };
+		B7A8303616D2D21500E7587F /* JSBackspaceReportingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBackspaceReportingTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 				1A1A06B813FEE01C00CA6645 /* JSTokenButton.m */,
 				1A1A06AF13FEDEEC00CA6645 /* DemoViewController.xib */,
 				1A1A06A113FEDEEC00CA6645 /* Supporting Files */,
+				B7A8303516D2D21500E7587F /* JSBackspaceReportingTextField.h */,
+				B7A8303616D2D21500E7587F /* JSBackspaceReportingTextField.m */,
 			);
 			path = JSTokenField;
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 				1A1A06AE13FEDEEC00CA6645 /* DemoViewController.m in Sources */,
 				1A1A06BB13FEE01C00CA6645 /* JSTokenButton.m in Sources */,
 				1A1A06BC13FEE01C00CA6645 /* JSTokenField.m in Sources */,
+				B7A8303716D2D21500E7587F /* JSBackspaceReportingTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +261,7 @@
 			files = (
 				B71650DC14439A0500EBF2C7 /* JSTokenField.m in Sources */,
 				B71650DE14439A0500EBF2C7 /* JSTokenButton.m in Sources */,
+				B7A8303816D2D2E700E7587F /* JSBackspaceReportingTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
