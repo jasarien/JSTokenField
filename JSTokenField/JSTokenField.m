@@ -237,16 +237,22 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	CGRect currentRect = CGRectZero;
 	
 	[_label sizeToFit];
-	[_label setFrame:CGRectMake(WIDTH_PADDING, HEIGHT_PADDING, [_label frame].size.width, [_label frame].size.height + 3)];
+	[_label setFrame:CGRectMake(WIDTH_PADDING, HEIGHT_PADDING, [_label frame].size.width, [_label frame].size.height + HEIGHT_PADDING)];
 	
-	currentRect.origin.x += _label.frame.size.width + _label.frame.origin.x + WIDTH_PADDING;
+	currentRect.origin.x = _label.frame.origin.x;
+	if (_label.frame.size.width > 0) {
+		currentRect.origin.x += _label.frame.size.width + WIDTH_PADDING;
+	}
 	
+	NSMutableArray *lastLineTokens = [NSMutableArray array];
+    
 	for (UIButton *token in _tokens)
 	{
 		CGRect frame = [token frame];
 		
 		if ((currentRect.origin.x + frame.size.width) > self.frame.size.width)
 		{
+			[lastLineTokens removeAllObjects];
 			currentRect.origin = CGPointMake(WIDTH_PADDING, (currentRect.origin.y + frame.size.height + HEIGHT_PADDING));
 		}
 		
@@ -259,6 +265,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		{
 			[self addSubview:token];
 		}
+		[lastLineTokens addObject:token];
 		
 		currentRect.origin.x += frame.size.width + WIDTH_PADDING;
 		currentRect.size = frame.size;
@@ -274,6 +281,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	}
 	else
 	{
+		[lastLineTokens removeAllObjects];
 		textFieldFrame.size.width = self.frame.size.width;
         textFieldFrame.origin = CGPointMake(WIDTH_PADDING * 2, 
                                             (currentRect.origin.y + currentRect.size.height + HEIGHT_PADDING));
@@ -283,6 +291,14 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	[_textField setFrame:textFieldFrame];
 	CGRect selfFrame = [self frame];
 	selfFrame.size.height = textFieldFrame.origin.y + textFieldFrame.size.height + HEIGHT_PADDING;
+	
+	CGFloat textFieldMidY = CGRectGetMidY(textFieldFrame);
+	for (UIButton *token in lastLineTokens) {
+		// Center the last line's tokens vertically with the text field
+		CGPoint tokenCenter = token.center;
+		tokenCenter.y = textFieldMidY;
+		token.center = tokenCenter;
+	}
 	
 	[UIView animateWithDuration:0.3
 					 animations:^{
