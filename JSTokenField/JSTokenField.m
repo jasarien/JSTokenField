@@ -310,11 +310,16 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		token.center = tokenCenter;
 	}
 	
-	[UIView animateWithDuration:0.3
-					 animations:^{
-						 [self setFrame:selfFrame];
-					 }
-					 completion:nil];
+	if (self.layer.presentationLayer == nil) {
+		[self setFrame:selfFrame];
+	}
+	else {
+		[UIView animateWithDuration:0.3
+						 animations:^{
+							 [self setFrame:selfFrame];
+						 }
+						 completion:nil];
+	}
 }
 
 - (void)toggle:(id)sender
