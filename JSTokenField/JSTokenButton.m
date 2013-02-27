@@ -106,6 +106,14 @@
 
 #pragma mark - UIKeyInput
 - (void)deleteBackward {
+    id <JSTokenFieldDelegate> delegate = _parentField.delegate;
+    if ([delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)]) {
+        NSString *name = [self titleForState:UIControlStateNormal];
+        BOOL shouldRemove = [delegate tokenField:_parentField shouldRemoveToken:name representedObject:self.representedObject];
+        if (!shouldRemove) {
+            return;
+        }
+    }
     [_parentField removeTokenForString:[self titleForState:UIControlStateNormal]];
 }
 
