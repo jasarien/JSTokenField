@@ -200,12 +200,21 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		_deletedToken = [[_tokens objectAtIndex:i] retain];
 		if ([_deletedToken isToggled])
 		{
+			NSString *tokenName = [_deletedToken titleForState:UIControlStateNormal];
+			if ([self.delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)]) {
+				BOOL shouldRemove = [self.delegate tokenField:self
+											shouldRemoveToken:tokenName
+											representedObject:_deletedToken.representedObject];
+				if (shouldRemove == NO) {
+					return;
+				}
+			}
+			
 			[_deletedToken removeFromSuperview];
 			[_tokens removeObject:_deletedToken];
 			
 			if ([self.delegate respondsToSelector:@selector(tokenField:didRemove:representedObject:)])
 			{
-				NSString *tokenName = [_deletedToken titleForState:UIControlStateNormal];
 				[self.delegate tokenField:self didRemoveToken:tokenName representedObject:_deletedToken.representedObject];
 			}
 			
@@ -354,7 +363,15 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     if ([string isEqualToString:@""] && NSEqualRanges(range, NSMakeRange(0, 0)))
 	{
         JSTokenButton *token = [_tokens lastObject];
-        [token becomeFirstResponder];		
+		if (!token) {
+			return NO;
+		}
+		
+		NSString *name = [token titleForState:UIControlStateNormal];
+		// If we don't allow deleting the token, don't even bother letting it highlight
+		if ([self.delegate tokenField:self shouldRemoveToken:name representedObject:token.representedObject]) {
+			[token becomeFirstResponder];
+		}
 		return NO;
 	}
 	
