@@ -11,8 +11,11 @@
 @implementation JSBackspaceReportingTextField
 
 - (void)deleteBackward {
+    BOOL fieldWasEmpty = (self.text.length == 0);
+
     [super deleteBackward];
-    if (self.text.length == 0) {
+
+    if (fieldWasEmpty) {
         if ([self.delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
             [self.delegate textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
         }
