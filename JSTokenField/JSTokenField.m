@@ -374,7 +374,8 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		
 		NSString *name = [token titleForState:UIControlStateNormal];
 		// If we don't allow deleting the token, don't even bother letting it highlight
-		if ([self.delegate tokenField:self shouldRemoveToken:name representedObject:token.representedObject]) {
+		BOOL responds = [self.delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)];
+		if (responds == NO || [self.delegate tokenField:self shouldRemoveToken:name representedObject:token.representedObject]) {
 			[token becomeFirstResponder];
 		}
 		return NO;
