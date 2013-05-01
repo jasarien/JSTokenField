@@ -213,7 +213,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 			[_deletedToken removeFromSuperview];
 			[_tokens removeObject:_deletedToken];
 			
-			if ([self.delegate respondsToSelector:@selector(tokenField:didRemove:representedObject:)])
+			if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveToken:representedObject:)])
 			{
 				[self.delegate tokenField:self didRemoveToken:tokenName representedObject:_deletedToken.representedObject];
 			}
