@@ -332,6 +332,10 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	JSTokenButton *token = (JSTokenButton *)sender;
 	[token setToggled:YES];
     [token becomeFirstResponder];
+    
+    if ([self.delegate respondsToSelector:@selector(didSelectTokenButton:)]) {
+        [self.delegate didSelectTokenButton:token];
+    }
 }
 
 - (void)setFrame:(CGRect)frame
@@ -351,6 +355,25 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	if (CGRectEqualToRect(oldFrame, frame) == NO) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[[userInfo copy] autorelease]];
 	}
+}
+
+
+- (BOOL)resignFirstResponder
+{
+    if ([_textField isFirstResponder]) {
+        return [_textField resignFirstResponder];
+    };
+    
+	for (JSTokenButton *token in _tokens)
+	{
+        if ([token isFirstResponder])
+        {
+            [token setToggled:NO];
+            return [token resignFirstResponder];
+        }
+	}
+    
+    return NO;
 }
 
 #pragma mark -
@@ -412,7 +435,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
     if ([self.delegate respondsToSelector:@selector(tokenFieldDidBeginEditing:)]) {
         [self.delegate tokenFieldDidBeginEditing:self];
-        return;
     }
 }
 
