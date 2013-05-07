@@ -30,14 +30,14 @@
 #import "JSTokenButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define ZERO_WIDTH_SPACE_STRING @"\u200B"
+NSString * const JSZeroWidthSpaceString = @"\u200B";
 
 
 @interface JSTokenField ()
 
 @property (nonatomic, strong) NSMutableArray *tokens;
 @property (nonatomic, readwrite, retain) UITextField *textField;
-@property (nonatomic, readwrite, retain) UILabel *label;
+@property (nonatomic, readwrite, retain) UIScrollView *scrollView;
 
 @end
 
@@ -75,28 +75,28 @@
 	self.tokens = [[NSMutableArray alloc] init];
 	
 	// Setup the fields appearance views
+	self.clipsToBounds = TRUE;
     [self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
 	
     CGRect frame = self.frame;
-	UIEdgeInsets contentInsets = UIEdgeInsetsMake(3, 3, 3, 3);
+	
+	UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+	self.scrollView = scrollView;
+	[self addSubview:scrollView];
+	
+	UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 3.0, 8.0, 3.0);
 	self.tokenPadding = CGSizeMake(5, 5);
 	self.contentInsets = contentInsets;
 	
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextColor:[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1.0]];
-    [label setFont:[UIFont fontWithName:@"Helvetica Neue" size:15.0]];
-    [self addSubview:label];
-	self.label = label;
-    
-    frame.origin.y += contentInsets.top;
     frame.size.height -= contentInsets.top + contentInsets.bottom;
 	
+	
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
-    [textField setDelegate:self];
     [textField setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
-    [textField setText:ZERO_WIDTH_SPACE_STRING];
-    [self addSubview:textField];
+    textField.delegate = self;
+	textField.text = JSZeroWidthSpaceString;
+	
+    [scrollView addSubview:textField];
 	self.textField = textField;
 	
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
@@ -140,29 +140,25 @@
 
 - (void)layoutSubviews
 {
-	[_label sizeToFit];
+	self.scrollView.frame = self.bounds;
 	
-	CGRect labelFrame = CGRectMake(_contentInsets.left, _contentInsets.top, [_label frame].size.width, [_label frame].size.height + 3);
-	_label.frame = labelFrame;
-	
-	CGRect currentRect = CGRectZero;
-	currentRect.origin.x += labelFrame.size.width + labelFrame.origin.x + _tokenPadding.width;
+	CGRect currentRect = CGRectMake(_contentInsets.left, 0.0, 0.0, 0.0);
 	
 	for(UIButton *token in self.tokens) {
-		CGRect frame = [token frame];
+		CGRect tokenFrame = [token frame];
 		
-		if((currentRect.origin.x + frame.size.width) > self.frame.size.width)
-			currentRect.origin = CGPointMake(_contentInsets.left, (currentRect.origin.y + frame.size.height + _tokenPadding.height));
+		if((currentRect.origin.x + tokenFrame.size.width) > self.frame.size.width - _contentInsets.right)
+			currentRect.origin = CGPointMake(_contentInsets.left, (currentRect.origin.y + tokenFrame.size.height + _tokenPadding.height));
 		
-		frame.origin.x = currentRect.origin.x;
-		frame.origin.y = currentRect.origin.y + _contentInsets.top - 1;
-		[token setFrame:frame];
+		tokenFrame.origin.x = currentRect.origin.x;
+		tokenFrame.origin.y = currentRect.origin.y + _contentInsets.top - 1;
+		token.frame = tokenFrame;
 		
 		if(![token superview])
-			[self addSubview:token];
+			[self.scrollView addSubview:token];
 		
-		currentRect.origin.x += frame.size.width + _tokenPadding.width;
-		currentRect.size = frame.size;
+		currentRect.origin.x += tokenFrame.size.width + _tokenPadding.width;
+		currentRect.size = tokenFrame.size;
 	}
 	
 	
@@ -178,6 +174,8 @@
 	
 	textFieldFrame.origin.y += _contentInsets.top;
 	self.textField.frame = textFieldFrame;
+	
+	self.scrollView.contentSize = CGSizeMake(self.frame.size.width, CGRectGetMaxY(currentRect) + 30.0 + _contentInsets.bottom + _tokenPadding.height);
 }
 
 
@@ -214,7 +212,7 @@
 	if([labelText length] == 0)
 		return;
 	
-    [self.textField setText:ZERO_WIDTH_SPACE_STRING];
+    self.textField.text = JSZeroWidthSpaceString;
 	labelText = [labelText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
 	if([labelText length]) {
@@ -235,6 +233,8 @@
 		
 		[self setNeedsLayout];
 	}
+	
+	[self scrollToBottom];
 }
 
 
@@ -302,10 +302,12 @@
 	// Ensure there's always a space at the beginning
 	NSMutableString *text = self.textField.text.mutableCopy;
 	
-	if(![text hasPrefix:ZERO_WIDTH_SPACE_STRING]) {
-		[text insertString:ZERO_WIDTH_SPACE_STRING atIndex:0];
+	if(![text hasPrefix:JSZeroWidthSpaceString]) {
+		[text insertString:JSZeroWidthSpaceString atIndex:0];
 		self.textField.text = text;
 	}
+	
+	[self scrollToBottom];
 }
 
 
@@ -313,13 +315,14 @@
 {
     if([string isEqualToString:@""]
 		&& (NSEqualRanges(range, NSMakeRange(0, 0))
-		|| [[self.textField.text substringWithRange:range] isEqualToString:ZERO_WIDTH_SPACE_STRING]))
+		|| [[self.textField.text substringWithRange:range] isEqualToString:JSZeroWidthSpaceString]))
 	{
         JSTokenButton *token = [self.tokens lastObject];
         [token becomeFirstResponder];
 		return NO;
 	}
 	
+	[self scrollToBottom];
 	return YES;
 }
 
@@ -327,6 +330,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	[self askDelegateToTokenizeText];
+	[self scrollToBottom];
+
 	return FALSE;
 }
 
@@ -334,9 +339,25 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
 	[self askDelegateToTokenizeText];
+	[self scrollToBottom];
 	
     if([self.delegate respondsToSelector:@selector(tokenFieldDidEndEditing:)])
         [self.delegate tokenFieldDidEndEditing:self];
+}
+
+
+- (void)scrollToBottom
+{
+	UIScrollView *scrollView = self.scrollView;
+	
+	CGFloat height = 10.0;
+	CGSize contentSize = [scrollView contentSize];
+	CGRect scrollRect = CGRectMake(0.0, contentSize.height + _contentInsets.top + _contentInsets.bottom + 20.0, contentSize.width, height);
+	
+	[CATransaction begin];
+	[CATransaction setValue:[NSNumber numberWithBool:TRUE] forKey:kCATransactionDisableActions];
+	[scrollView scrollRectToVisible:scrollRect animated:FALSE];
+	[CATransaction commit];
 }
 
 
