@@ -64,6 +64,35 @@
 	return button;
 }
 
+
++ (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj
+{
+	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0.f, 0.f, view.frame.size.width, view.frame.size.height);
+    [button addSubview:view];
+    
+//	[button setAdjustsImageWhenHighlighted:NO];
+//	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//	[[button titleLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
+//	[[button titleLabel] setLineBreakMode:UILineBreakModeTailTruncation];
+//	[button setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
+	
+//	[button setTitle:string forState:UIControlStateNormal];
+	
+//	[button sizeToFit];
+//	CGRect frame = [button frame];
+//	frame.size.width += 20;
+//	frame.size.height = 25;
+//	[button setFrame:frame];
+	
+	[button setToggled:NO];
+	
+	[button setRepresentedObject:obj];
+	
+	return button;
+}
+
+
 - (void)setToggled:(BOOL)toggled
 {
 	_toggled = toggled;

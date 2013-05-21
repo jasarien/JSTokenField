@@ -142,6 +142,24 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	}
 }
 
+
+- (void)addTokenWithView:(UIView *)view representedObject:(id)obj
+{
+	if (view)
+	{
+		JSTokenButton *token = [self tokenWithView:view representedObject:obj];
+        token.parentField = self;
+		[_tokens addObject:token];
+		
+		if ([self.delegate respondsToSelector:@selector(tokenField:didAddToken:representedObject:)])
+		{
+			[self.delegate tokenField:self didAddToken:view representedObject:obj];
+		}
+		
+		[self setNeedsLayout];
+	}
+}
+
 - (void)removeTokenWithTest:(BOOL (^)(JSTokenButton *token))test {
     JSTokenButton *tokenToRemove = nil;
     for (JSTokenButton *token in [_tokens reverseObjectEnumerator]) {
@@ -226,6 +244,25 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
 {
 	JSTokenButton *token = [JSTokenButton tokenWithString:string representedObject:obj];
+	CGRect frame = [token frame];
+	
+	if (frame.size.width > self.frame.size.width)
+	{
+		frame.size.width = self.frame.size.width - (WIDTH_PADDING * 2);
+	}
+	
+	[token setFrame:frame];
+	
+	[token addTarget:self
+			  action:@selector(toggle:)
+	forControlEvents:UIControlEventTouchUpInside];
+	
+	return token;
+}
+
+- (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj
+{
+	JSTokenButton *token = [JSTokenButton tokenWithView:view representedObject:obj];
 	CGRect frame = [token frame];
 	
 	if (frame.size.width > self.frame.size.width)

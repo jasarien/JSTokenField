@@ -55,6 +55,7 @@ extern NSString *const JSDeletedTokenKey;
 @property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
+- (void)addTokenWithView:(UIView *)view representedObject:(id)obj;
 - (void)removeTokenForString:(NSString *)string;
 - (void)removeTokenWithRepresentedObject:(id)representedObject;
 - (void)removeAllTokens;
@@ -65,9 +66,9 @@ extern NSString *const JSDeletedTokenKey;
 
 @optional
 
-- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
-- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj;
-- (BOOL)tokenField:(JSTokenField *)tokenField shouldRemoveToken:(NSString *)title representedObject:(id)obj;
+- (void)tokenField:(JSTokenField *)tokenField didAddToken:(id)value representedObject:(id)obj;
+- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(id)value representedObject:(id)obj;
+- (BOOL)tokenField:(JSTokenField *)tokenField shouldRemoveToken:(id)value representedObject:(id)obj;
 
 - (void)tokenFieldTextDidChange:(JSTokenField *)tokenField;
 
