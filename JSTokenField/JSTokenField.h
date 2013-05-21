@@ -77,5 +77,6 @@ extern NSString *const JSDeletedTokenKey;
 - (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField;
 
 - (void)didSelectTokenButton:(JSTokenButton *)tokenButton;
+- (void)didUnselectTokenButton:(JSTokenButton *)tokenButton;
 
 @end

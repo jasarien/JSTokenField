@@ -216,7 +216,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	for (int i = 0; i < [_tokens count]; i++)
 	{
 		_deletedToken = [[_tokens objectAtIndex:i] retain];
-		if ([_deletedToken isToggled])
+		if (_deletedToken.selected)
 		{
 			NSString *tokenName = [_deletedToken titleForState:UIControlStateNormal];
 			if ([self.delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)]) {
@@ -363,11 +363,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	for (JSTokenButton *token in _tokens)
 	{
-		[token setToggled:NO];
+		token.selected = NO;
 	}
 	
 	JSTokenButton *token = (JSTokenButton *)sender;
-	[token setToggled:YES];
+	token.selected = YES;
     [token becomeFirstResponder];
     
     if ([self.delegate respondsToSelector:@selector(didSelectTokenButton:)]) {
@@ -405,8 +405,14 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	{
         if ([token isFirstResponder])
         {
-            [token setToggled:NO];
-            return [token resignFirstResponder];
+            token.selected = NO;
+            
+            BOOL retVal = [token resignFirstResponder];
+            if ([self.delegate respondsToSelector:@selector(didUnselectTokenButton:)]) {
+                [self.delegate didUnselectTokenButton:token];
+            }
+            
+            return retVal;
         }
 	}
     
@@ -432,10 +438,9 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 			return NO;
 		}
 		
-		NSString *name = [token titleForState:UIControlStateNormal];
 		// If we don't allow deleting the token, don't even bother letting it highlight
 		BOOL responds = [self.delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)];
-		if (responds == NO || [self.delegate tokenField:self shouldRemoveToken:name representedObject:token.representedObject]) {
+		if (responds == NO || [self.delegate tokenField:self shouldRemoveToken:token.value representedObject:token.representedObject]) {
 			[token becomeFirstResponder];
 		}
 		return NO;
