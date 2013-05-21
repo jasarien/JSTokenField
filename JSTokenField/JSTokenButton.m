@@ -38,8 +38,8 @@
 @synthesize representedObject = _representedObject;
 @synthesize parentField = _parentField;
 
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
-{
+
++ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj {
 	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
 	[button setNormalBg:[[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
 	[button setHighlightedBg:[[UIImage imageNamed:@"tokenHighlighted.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
@@ -65,28 +65,11 @@
 }
 
 
-+ (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj
-{
++ (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj {
 	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.f, 0.f, view.frame.size.width, view.frame.size.height);
     [button addSubview:view];
-    
-//	[button setAdjustsImageWhenHighlighted:NO];
-//	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//	[[button titleLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
-//	[[button titleLabel] setLineBreakMode:UILineBreakModeTailTruncation];
-//	[button setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
-	
-//	[button setTitle:string forState:UIControlStateNormal];
-	
-//	[button sizeToFit];
-//	CGRect frame = [button frame];
-//	frame.size.width += 20;
-//	frame.size.height = 25;
-//	[button setFrame:frame];
-	
 	[button setToggled:NO];
-	
 	[button setRepresentedObject:obj];
 	
 	return button;
@@ -109,13 +92,14 @@
 	}
 }
 
-- (void)dealloc
-{
+
+- (void)dealloc {
 	self.representedObject = nil;
 	self.highlightedBg = nil;
 	self.normalBg = nil;
     [super dealloc];
 }
+
 
 - (BOOL)becomeFirstResponder {
     BOOL superReturn = [super becomeFirstResponder];
@@ -125,6 +109,7 @@
     return superReturn;
 }
 
+
 - (BOOL)resignFirstResponder {
     BOOL superReturn = [super resignFirstResponder];
     if (superReturn) {
@@ -133,8 +118,12 @@
     return superReturn;
 }
 
+
 #pragma mark - UIKeyInput
+
+
 - (void)deleteBackward {
+    
     id <JSTokenFieldDelegate> delegate = _parentField.delegate;
     if ([delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)]) {
         NSString *name = [self titleForState:UIControlStateNormal];
@@ -143,12 +132,16 @@
             return;
         }
     }
-    [_parentField removeTokenForString:[self titleForState:UIControlStateNormal]];
+
+    [_parentField removeTokenWithRepresentedObject:self.representedObject];
 }
+
 
 - (BOOL)hasText {
     return NO;
 }
+
+
 - (void)insertText:(NSString *)text {
     return;
 }
