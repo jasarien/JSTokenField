@@ -52,10 +52,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 @implementation JSTokenField
 
-@synthesize tokens = _tokens;
-@synthesize textField = _textField;
-@synthesize label = _label;
-@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -106,16 +102,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     
     [self.textField addTarget:self action:@selector(textFieldWasUpdated:) forControlEvents:UIControlEventEditingChanged];
 }
-
-- (void)dealloc
-{
-	[_textField release], _textField = nil;
-	[_label release], _label = nil;
-	[_tokens release], _tokens = nil;
-	
-	[super dealloc];
-}
-
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj
 {
@@ -168,7 +154,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
             [_textField becomeFirstResponder];
         }
         [tokenToRemove removeFromSuperview];
-        [[tokenToRemove retain] autorelease]; // removing it from the array will dealloc the object, but we want to keep it around for the delegate method below
         
         [_tokens removeObject:tokenToRemove];
         if ([self.delegate respondsToSelector:@selector(tokenField:didRemoveToken:representedObject:)])
@@ -202,14 +187,13 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 			return token == button;
 		}];
 	}
-	[tokensCopy release];
 }
 
 - (void)deleteHighlightedToken
 {
 	for (int i = 0; i < [_tokens count]; i++)
 	{
-		_deletedToken = [[_tokens objectAtIndex:i] retain];
+		_deletedToken = [_tokens objectAtIndex:i];
 		if (_deletedToken.selected)
 		{
 			NSString *tokenName = [_deletedToken titleForState:UIControlStateNormal];
@@ -384,12 +368,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     [userInfo setObject:[NSValue valueWithCGRect:oldFrame] forKey:JSTokenFieldOldFrameKey];
 	if (_deletedToken)
 	{
-		[userInfo setObject:_deletedToken forKey:JSDeletedTokenKey]; 
-		[_deletedToken release], _deletedToken = nil;
+		[userInfo setObject:_deletedToken forKey:JSDeletedTokenKey];
 	}
 	
 	if (CGRectEqualToRect(oldFrame, frame) == NO) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[[userInfo copy] autorelease]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldFrameDidChangeNotification object:self userInfo:[userInfo copy]];
 	}
 }
 

@@ -78,8 +78,7 @@
 
 
 - (void)dealloc {
-	self.representedObject = nil;
-    [super dealloc];
+
 }
 
 
