@@ -363,6 +363,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 {
 	for (JSTokenButton *token in _tokens)
 	{
+        if ([token isFirstResponder]) {
+            if ([self.delegate respondsToSelector:@selector(didUnselectTokenButton:)]) {
+                [self.delegate didUnselectTokenButton:token];
+            }
+        }
 		token.selected = NO;
 	}
 	
@@ -406,13 +411,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
         if ([token isFirstResponder])
         {
             token.selected = NO;
-            
-            BOOL retVal = [token resignFirstResponder];
-            if ([self.delegate respondsToSelector:@selector(didUnselectTokenButton:)]) {
-                [self.delegate didUnselectTokenButton:token];
-            }
-            
-            return retVal;
+            return [token resignFirstResponder];
         }
 	}
     
