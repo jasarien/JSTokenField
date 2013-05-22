@@ -136,7 +136,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 			[self.delegate tokenField:self didAddToken:view representedObject:obj];
 		}
 		
-		[self setNeedsLayout];
+        [self setNeedsLayout];
 	}
 }
 
@@ -286,10 +286,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		
 		[token setFrame:frame];
 		
-		if (![token superview])
-		{
-			[self addSubview:token];
-		}
 		[lastLineTokens addObject:token];
 		
 		currentRect.origin.x += frame.size.width + WIDTH_PADDING;
@@ -327,15 +323,30 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	
 	if (self.layer.presentationLayer == nil) {
 		[self setFrame:selfFrame];
+        [self addMissingTokensAsSubview:_tokens];
 	}
 	else {
-		[UIView animateWithDuration:0.3
-						 animations:^{
-							 [self setFrame:selfFrame];
-						 }
-						 completion:nil];
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             [self setFrame:selfFrame];
+                         }
+                         completion:^(BOOL finished) {
+                             [self addMissingTokensAsSubview:_tokens];
+                         }];
 	}
 }
+
+
+- (void)addMissingTokensAsSubview:(NSArray *)tokens
+{
+    for (UIButton *token in _tokens) {
+        if (![token superview])
+        {
+            [self addSubview:token];
+        }
+    }
+}
+
 
 - (void)toggle:(id)sender
 {
@@ -361,10 +372,10 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (void)setFrame:(CGRect)frame
 {
     CGRect oldFrame = self.frame;
+
+    [super setFrame:frame];
     
-	[super setFrame:frame];
-	
-	NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:[NSValue valueWithCGRect:frame] forKey:JSTokenFieldNewFrameKey];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:[NSValue valueWithCGRect:frame] forKey:JSTokenFieldNewFrameKey];
     [userInfo setObject:[NSValue valueWithCGRect:oldFrame] forKey:JSTokenFieldOldFrameKey];
 	if (_deletedToken)
 	{
