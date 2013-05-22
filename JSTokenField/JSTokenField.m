@@ -91,9 +91,6 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     
     [self addSubview:_label];
     
-    //		self.layer.borderColor = [[UIColor blueColor] CGColor];
-    //		self.layer.borderWidth = 1.0;
-    
     _tokens = [[NSMutableArray alloc] init];
     
     frame.origin.y += HEIGHT_PADDING;
@@ -104,10 +101,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     [_textField setBackground:nil];
     [_textField setBackgroundColor:[UIColor clearColor]];
     [_textField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-    
-    //		[_textField.layer setBorderColor:[[UIColor redColor] CGColor]];
-    //		[_textField.layer setBorderWidth:1.0];
-    
+
     [self addSubview:_textField];
     
     [self.textField addTarget:self action:@selector(textFieldWasUpdated:) forControlEvents:UIControlEventEditingChanged];
@@ -441,6 +435,9 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		BOOL responds = [self.delegate respondsToSelector:@selector(tokenField:shouldRemoveToken:representedObject:)];
 		if (responds == NO || [self.delegate tokenField:self shouldRemoveToken:token.value representedObject:token.representedObject]) {
 			[token becomeFirstResponder];
+            if ([self.delegate respondsToSelector:@selector(didSelectTokenButton:)]) {
+                [self.delegate didSelectTokenButton:token];
+            }
 		}
 		return NO;
 	}
