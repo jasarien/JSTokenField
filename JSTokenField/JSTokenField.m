@@ -296,7 +296,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	
 	textFieldFrame.origin = currentRect.origin;
 	
-	if ((self.frame.size.width - textFieldFrame.origin.x) >= 60)
+	if ((self.frame.size.width - textFieldFrame.origin.x) >= ((self.editing)? 60 : 0))
 	{
 		textFieldFrame.size.width = self.frame.size.width - textFieldFrame.origin.x;
 	}
@@ -406,6 +406,13 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     return NO;
 }
 
+
+- (void)setEditing:(BOOL)editing {
+    _editing = editing;
+    [self setNeedsLayout];
+}
+
+
 #pragma mark -
 #pragma mark UITextFieldDelegate
 
@@ -452,9 +459,9 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    self.editing = NO;
     if ([self.delegate respondsToSelector:@selector(tokenFieldDidEndEditing:)]) {
         [self.delegate tokenFieldDidEndEditing:self];
-        return;
     }
     else if ([[textField text] length] > 1)
     {
@@ -465,6 +472,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    self.editing = YES;
     if ([self.delegate respondsToSelector:@selector(tokenFieldDidBeginEditing:)]) {
         [self.delegate tokenFieldDidBeginEditing:self];
     }

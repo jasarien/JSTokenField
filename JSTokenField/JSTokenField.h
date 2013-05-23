@@ -45,6 +45,7 @@ extern NSString *const JSDeletedTokenKey;
 @property (nonatomic)           UILabel *label;
 @property (nonatomic, readonly) NSMutableArray *tokens;
 @property (nonatomic, weak)     id <JSTokenFieldDelegate> delegate;
+@property (nonatomic)           BOOL editing;
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
 - (void)addTokenWithView:(UIView *)view representedObject:(id)obj;
