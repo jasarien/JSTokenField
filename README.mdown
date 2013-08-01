@@ -8,7 +8,7 @@ A token field that mimics the behaviour and functionality provided by Mail.app's
 - Can add names/numbers from the address book
 - can select individual tokens and remove them.
 
-![JSTokenField](http://d.pr/i/x75f+ "JSTokenField")
+![JSTokenField](http://d.pr/i/4Qrd+ "JSTokenField")
 
 License (Simplified BSD)
 =======
