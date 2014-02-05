@@ -32,6 +32,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 NSString *const JSTokenFieldFrameDidChangeNotification = @"JSTokenFieldFrameDidChangeNotification";
+NSString *const JSTokenFieldTokenSecondTapNotification = @"JSTokenFieldTokenSecondTapNotification";
 NSString *const JSTokenFieldNewFrameKey = @"JSTokenFieldNewFrameKey";
 NSString *const JSTokenFieldOldFrameKey = @"JSTokenFieldOldFrameKey";
 NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
@@ -324,12 +325,16 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (void)toggle:(id)sender
 {
-	for (JSTokenButton *token in _tokens)
+	JSTokenButton *token = (JSTokenButton *)sender;
+	if (token.toggled) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:JSTokenFieldTokenSecondTapNotification object:token];
+	}
+
+	for (JSTokenButton *t in _tokens)
 	{
-		[token setToggled:NO];
+		[t setToggled:NO];
 	}
 	
-	JSTokenButton *token = (JSTokenButton *)sender;
 	[token setToggled:YES];
     [token becomeFirstResponder];
 }

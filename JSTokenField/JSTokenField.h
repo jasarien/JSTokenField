@@ -32,6 +32,8 @@
 @protocol JSTokenFieldDelegate;
 
 extern NSString *const JSTokenFieldFrameDidChangeNotification;
+extern NSString *const JSTokenFieldTokenSecondTapNotification;
+
 extern NSString *const JSTokenFieldNewFrameKey;
 extern NSString *const JSTokenFieldOldFrameKey;
 extern NSString *const JSDeletedTokenKey;
