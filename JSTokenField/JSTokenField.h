@@ -38,23 +38,17 @@ extern NSString *const JSDeletedTokenKey;
 
 @interface JSTokenField : UIView <UITextFieldDelegate> {
 	
-	NSMutableArray *_tokens;
-	
-	UITextField *_textField;
-	
-	id <JSTokenFieldDelegate> _delegate;
-	
 	JSTokenButton *_deletedToken;
-	
-	UILabel *_label;
 }
 
 @property (nonatomic, readonly) UITextField *textField;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, readonly, copy) NSMutableArray *tokens;
-@property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
+@property (nonatomic)           UILabel *label;
+@property (nonatomic, readonly) NSMutableArray *tokens;
+@property (nonatomic, weak)     id <JSTokenFieldDelegate> delegate;
+@property (nonatomic)           BOOL editing;
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
+- (void)addTokenWithView:(UIView *)view representedObject:(id)obj;
 - (void)removeTokenForString:(NSString *)string;
 - (void)removeTokenWithRepresentedObject:(id)representedObject;
 - (void)removeAllTokens;
@@ -65,14 +59,17 @@ extern NSString *const JSDeletedTokenKey;
 
 @optional
 
-- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj;
-- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj;
-- (BOOL)tokenField:(JSTokenField *)tokenField shouldRemoveToken:(NSString *)title representedObject:(id)obj;
-
+- (void)tokenField:(JSTokenField *)tokenField didAddToken:(id)value representedObject:(id)obj;
+- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(id)value representedObject:(id)obj;
+- (BOOL)tokenField:(JSTokenField *)tokenField shouldRemoveToken:(id)value representedObject:(id)obj;
 
 - (void)tokenFieldTextDidChange:(JSTokenField *)tokenField;
 
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField;
 - (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
+- (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField;
+
+- (void)didSelectTokenButton:(JSTokenButton *)tokenButton;
+- (void)didUnselectTokenButton:(JSTokenButton *)tokenButton;
 
 @end
