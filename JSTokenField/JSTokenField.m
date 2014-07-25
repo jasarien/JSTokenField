@@ -403,9 +403,28 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     }
     else if ([[textField text] length] > 1)
     {
-        [self addTokenWithTitle:[textField text] representedObject:[textField text]];
-        [textField setText:nil];
+        [self addTokensInField:textField];
     }
+}
+
+#pragma mark - Add Tokens in field
+
+- (void)addTokensInField:(UITextField*)textField {
+    
+    NSString *tokenString = textField.text;
+    
+    NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@";, "];
+    
+    if ((tokenString != nil) && (![tokenString isEqualToString:@""])) {
+        
+        NSArray *tokens = [tokenString componentsSeparatedByCharactersInSet:splitSet];
+        
+        for( NSString *token in tokens ) {
+            [self addTokenWithTitle:token representedObject:token];
+        }
+    }
+    [textField setText:nil];
+    
 }
 
 @end
