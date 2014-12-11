@@ -30,15 +30,16 @@
 #import "JSTokenField.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface JSTokenButton ()
+
+@property (nonatomic, strong, readwrite) id representedObject;
+@property (nonatomic, strong, readwrite) JSTokenField *parentField;
+
+@end
+
 @implementation JSTokenButton
 
-@synthesize toggled = _toggled;
-@synthesize normalBg = _normalBg;
-@synthesize highlightedBg = _highlightedBg;
-@synthesize representedObject = _representedObject;
-@synthesize parentField = _parentField;
-
-+ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj
++ (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj parentField:(JSTokenField *)parentField
 {
 	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
 	[button setNormalBg:[[UIImage imageNamed:@"tokenNormal.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]];
@@ -46,7 +47,7 @@
 	[button setAdjustsImageWhenHighlighted:NO];
 	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[[button titleLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
-	[[button titleLabel] setLineBreakMode:UILineBreakModeTailTruncation];
+	[[button titleLabel] setLineBreakMode:NSLineBreakByTruncatingTail];
 	[button setTitleEdgeInsets:UIEdgeInsetsMake(2, 10, 0, 10)];
 	
 	[button setTitle:string forState:UIControlStateNormal];
@@ -58,8 +59,8 @@
 	[button setFrame:frame];
 	
 	[button setToggled:NO];
-	
 	[button setRepresentedObject:obj];
+    [button setParentField:parentField];
 	
 	return button;
 }
@@ -78,14 +79,6 @@
 		[self setBackgroundImage:self.normalBg forState:UIControlStateNormal];
 		[self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	}
-}
-
-- (void)dealloc
-{
-	self.representedObject = nil;
-	self.highlightedBg = nil;
-	self.normalBg = nil;
-    [super dealloc];
 }
 
 - (BOOL)becomeFirstResponder {

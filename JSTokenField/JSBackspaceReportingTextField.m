@@ -10,16 +10,20 @@
 
 @implementation JSBackspaceReportingTextField
 
-- (void)deleteBackward {
-    BOOL shouldDismiss = (self.text.length == 0);
+- (void)insertText:(NSString *)text
+{
+    [super insertText:text];
+}
 
-    [super deleteBackward];
-
-    if (shouldDismiss) {
+- (BOOL)keyboardInputShouldDelete:(UITextField *)textField
+{
+    if (self.text.length == 0) {
         if ([self.delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
             [self.delegate textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
         }
     }
+    
+    return YES;
 }
 
 @end

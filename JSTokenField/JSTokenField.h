@@ -27,6 +27,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSBackspaceReportingTextField.h"
 
 @class JSTokenButton;
 @protocol JSTokenFieldDelegate;
@@ -36,23 +37,13 @@ extern NSString *const JSTokenFieldNewFrameKey;
 extern NSString *const JSTokenFieldOldFrameKey;
 extern NSString *const JSDeletedTokenKey;
 
-@interface JSTokenField : UIView <UITextFieldDelegate> {
-	
-	NSMutableArray *_tokens;
-	
-	UITextField *_textField;
-	
-	id <JSTokenFieldDelegate> _delegate;
-	
-	JSTokenButton *_deletedToken;
-	
-	UILabel *_label;
-}
+@interface JSTokenField : UIView <UITextFieldDelegate>
 
-@property (nonatomic, readonly) UITextField *textField;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, readonly, copy) NSMutableArray *tokens;
+@property (nonatomic, readonly) JSBackspaceReportingTextField *textField;
+@property (nonatomic, readonly) UILabel *label;
 @property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
+
+- (NSArray *)allTokens;
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
 - (void)removeTokenForString:(NSString *)string;

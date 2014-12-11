@@ -31,14 +31,5 @@
 #import <AddressBook/AddressBook.h>
 #import "JSTokenField.h"
 
-@interface DemoViewController : UIViewController <JSTokenFieldDelegate> {
-
-	NSMutableArray *_toRecipients;
-	NSMutableArray *_ccRecipients;
-	
-	JSTokenField *_toField;
-	JSTokenField *_ccField;
-	
-}
-
+@interface DemoViewController : UIViewController <JSTokenFieldDelegate>
 @end

@@ -32,8 +32,6 @@
 
 @interface DemoAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (nonatomic, retain) UIWindow *window;
-
-@property (nonatomic, retain) DemoViewController *viewController;
+@property (nonatomic, strong) UIWindow *window;
 
 @end

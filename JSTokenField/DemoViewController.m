@@ -29,83 +29,30 @@
 #import "DemoViewController.h"
 #import "JSTokenField.h"
 
+@interface DemoViewController ()
+
+@property (nonatomic, strong) NSMutableArray *toRecipients;
+@property (nonatomic, strong) JSTokenField *toField;
+
+@end
+
 @implementation DemoViewController
-
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_toRecipients release], _toRecipients = nil;
-	[_toField release], _toField = nil;
-	
-	[super dealloc];
-}
-
-- (void)didReceiveMemoryWarning
-{
-	[super didReceiveMemoryWarning];
-}
-
-#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(handleTokenFieldFrameDidChange:)
-												 name:JSTokenFieldFrameDidChangeNotification
-											   object:nil];
+	self.toRecipients = [[NSMutableArray alloc] init];
 	
-	_toRecipients = [[NSMutableArray alloc] init];
-	
-	_toField = [[JSTokenField alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
-	[[_toField label] setText:@"To:"];
-	[_toField setDelegate:self];
-	[self.view addSubview:_toField];
+	self.toField = [[JSTokenField alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
+	[[self.toField label] setText:@"To:"];
+	[self.toField setDelegate:self];
+	[self.view addSubview:self.toField];
     
-    UIView *separator1 = [[[UIView alloc] initWithFrame:CGRectMake(0, _toField.bounds.size.height-1, _toField.bounds.size.width, 1)] autorelease];
+    UIView *separator1 = [[UIView alloc] initWithFrame:CGRectMake(0, self.toField.bounds.size.height-1, self.toField.bounds.size.width, 1)];
     [separator1 setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
-    [_toField addSubview:separator1];
+    [self.toField addSubview:separator1];
     [separator1 setBackgroundColor:[UIColor lightGrayColor]];
-	
-	_ccField = [[JSTokenField alloc] initWithFrame:CGRectMake(0, 31, 320, 31)];
-	[[_ccField label] setText:@"CC:"];
-	[_ccField setDelegate:self];
-	[self.view addSubview:_ccField];
-    
-    UIView *separator2 = [[[UIView alloc] initWithFrame:CGRectMake(0, _ccField.bounds.size.height-1, _ccField.bounds.size.width, 1)] autorelease];
-    [separator2 setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
-    [_ccField addSubview:separator2];
-    [separator2 setBackgroundColor:[UIColor lightGrayColor]];
-
-}
-
-- (void)viewDidUnload
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_toRecipients release], _toRecipients = nil;
-	[_toField release], _toField = nil;
-	[super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
 }
 
 #pragma mark -
@@ -114,21 +61,21 @@
 - (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj
 {
 	NSDictionary *recipient = [NSDictionary dictionaryWithObject:obj forKey:title];
-	[_toRecipients addObject:recipient];
-	NSLog(@"Added token for < %@ : %@ >\n%@", title, obj, _toRecipients);
+	[self.toRecipients addObject:recipient];
+	NSLog(@"Added token for < %@ : %@ >\n%@", title, obj, self.toRecipients);
 
 }
 
 - (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
 {	
-	[_toRecipients removeObjectAtIndex:index];
-	NSLog(@"Deleted token %d\n%@", index, _toRecipients);
+	[self.toRecipients removeObjectAtIndex:index];
+	NSLog(@"Deleted token %tu\n%@", index, self.toRecipients);
 }
 
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
     NSMutableString *recipient = [NSMutableString string];
 	
-	NSMutableCharacterSet *charSet = [[[NSCharacterSet whitespaceCharacterSet] mutableCopy] autorelease];
+	NSMutableCharacterSet *charSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
 	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
 	
     NSString *rawStr = [[tokenField textField] text];
@@ -145,19 +92,9 @@
 		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
 	}
     
+    [[tokenField textField] setText:@""];
+    
     return NO;
-}
-
-- (void)handleTokenFieldFrameDidChange:(NSNotification *)note
-{
-	if ([[note object] isEqual:_toField])
-	{
-		[UIView animateWithDuration:0.0
-						 animations:^{
-							 [_ccField setFrame:CGRectMake(0, [_toField frame].size.height + [_toField frame].origin.y, [_ccField frame].size.width, [_ccField frame].size.height)];
-						 }
-						 completion:nil];
-	}
 }
 
 @end
