@@ -21,7 +21,7 @@
             </objects>
             <point key="canvasLocation" x="-276.26666666666665" y="307.66666666666669"/>
         </scene>
-        <!--Demo View Controller-->
+        <!--JSTokenField-->
         <scene sceneID="VkF-Fq-1gv">
             <objects>
                 <viewController id="dlb-L1-hui" customClass="DemoViewController" sceneMemberID="viewController">
@@ -31,7 +31,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="Php-9N-Ws2"/>
+                    <navigationItem key="navigationItem" title="JSTokenField" id="Php-9N-Ws2"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BpJ-Nm-yj6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

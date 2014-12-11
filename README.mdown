@@ -5,10 +5,9 @@ A token field that mimics the behaviour and functionality provided by Mail.app's
 
 - Tokens have a title and a represented object which is just an `id`.
 - The field will resize itself when tokens start to overflow - implement the delegate methods to resize your own interface to fit the new frame.
-- Can add names/numbers from the address book
 - can select individual tokens and remove them.
 
-![JSTokenField](http://d.pr/i/4Qrd+ "JSTokenField")
+![JSTokenField](http://d.pr/i/1gfUH+ "JSTokenField")
 
 License (Simplified BSD)
 =======
