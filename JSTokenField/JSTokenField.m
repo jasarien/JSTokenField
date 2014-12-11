@@ -171,7 +171,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 - (void)removeTokenForString:(NSString *)string
 {
     [self removeTokenWithTest:^BOOL(JSTokenButton *token) {
-        return [[token titleForState:UIControlStateNormal] isEqualToString:string];
+        return [[token titleForState:UIControlStateNormal] isEqualToString:string] && [token isToggled];
     }];
 }
 
