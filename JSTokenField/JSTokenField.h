@@ -29,7 +29,7 @@
 #import <UIKit/UIKit.h>
 
 @class JSTokenButton;
-@protocol JSTokenFieldDelegate;
+@protocol JSTokenFieldDelegate, JSTokenButtonCustomView;
 
 extern NSString *const JSTokenFieldFrameDidChangeNotification;
 extern NSString *const JSTokenFieldNewFrameKey;
@@ -48,7 +48,7 @@ extern NSString *const JSDeletedTokenKey;
 @property (nonatomic)           BOOL editing;
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
-- (void)addTokenWithView:(UIView *)view representedObject:(id)obj;
+- (void)addTokenWithView:(UIView<JSTokenButtonCustomView> *)view representedObject:(id)obj;
 - (void)removeTokenForString:(NSString *)string;
 - (void)removeTokenWithRepresentedObject:(id)representedObject;
 - (void)removeAllTokens;

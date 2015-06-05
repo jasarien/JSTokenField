@@ -35,6 +35,7 @@
 @synthesize value = _value;
 @synthesize representedObject = _representedObject;
 @synthesize parentField = _parentField;
+@synthesize customView = _customView;
 
 
 + (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj {
@@ -66,9 +67,10 @@
 }
 
 
-+ (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj {
++ (JSTokenButton *)tokenWithView:(UIView<JSTokenButtonCustomView> *)view representedObject:(id)obj {
 	JSTokenButton *button = (JSTokenButton *)[self buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.f, 0.f, view.frame.size.width, view.frame.size.height);
+    button.customView = view;
     [button addSubview:view];
     [button setValue:view];
 	[button setRepresentedObject:obj];
@@ -86,6 +88,9 @@
     BOOL superReturn = [super becomeFirstResponder];
     if (superReturn) {
         self.selected = YES;
+        if ([_customView respondsToSelector:@selector(buttonStateChanged:)]) {
+            [_customView buttonStateChanged:self.selected];
+        }
     }
     return superReturn;
 }
@@ -95,6 +100,9 @@
     BOOL superReturn = [super resignFirstResponder];
     if (superReturn) {
         self.selected = NO;
+        if ([_customView respondsToSelector:@selector(buttonStateChanged:)]) {
+            [_customView buttonStateChanged:self.selected];
+        }
     }
     return superReturn;
 }

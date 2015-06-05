@@ -30,6 +30,11 @@
 
 @class JSTokenField;
 
+@protocol JSTokenButtonCustomView <NSObject>
+@optional
+- (void)buttonStateChanged:(BOOL)selected;
+@end
+
 @interface JSTokenButton : UIButton <UIKeyInput> {
 	id _representedObject;
     id _value;
@@ -38,9 +43,10 @@
 @property (nonatomic, retain) id representedObject;
 @property (nonatomic, retain) id value;
 
+@property (nonatomic, retain) UIView<JSTokenButtonCustomView> *customView;
 @property (nonatomic, assign) JSTokenField *parentField;
 
 + (JSTokenButton *)tokenWithString:(NSString *)string representedObject:(id)obj;
-+ (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj;
++ (JSTokenButton *)tokenWithView:(UIView<JSTokenButtonCustomView> *)view representedObject:(id)obj;
 
 @end

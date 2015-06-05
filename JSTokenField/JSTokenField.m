@@ -123,7 +123,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 }
 
 
-- (void)addTokenWithView:(UIView *)view representedObject:(id)obj
+- (void)addTokenWithView:(UIView<JSTokenButtonCustomView> *)view representedObject:(id)obj
 {
 	if (view)
 	{
@@ -238,7 +238,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 	return token;
 }
 
-- (JSTokenButton *)tokenWithView:(UIView *)view representedObject:(id)obj
+- (JSTokenButton *)tokenWithView:(UIView<JSTokenButtonCustomView> *)view representedObject:(id)obj
 {
 	JSTokenButton *token = [JSTokenButton tokenWithView:view representedObject:obj];
 	CGRect frame = [token frame];
