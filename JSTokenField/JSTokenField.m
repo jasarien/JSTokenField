@@ -390,6 +390,8 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 
 - (BOOL)resignFirstResponder
 {
+    BOOL ourReturnValue = [super resignFirstResponder];
+    
     if ([_textField isFirstResponder]) {
         return [_textField resignFirstResponder];
     };
@@ -403,7 +405,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
         }
 	}
     
-    return NO;
+    return ourReturnValue;
 }
 
 
