@@ -83,7 +83,7 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, frame.size.height)];
     [_label setBackgroundColor:[UIColor clearColor]];
     [_label setTextColor:[UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1.0]];
-    [_label setFont:[UIFont fontWithName:@"Helvetica Neue" size:17.0]];
+    [_label setFont:[UIFont systemFontOfSize:17.0]];
     
     [self addSubview:_label];
     
